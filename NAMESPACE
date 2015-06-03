@@ -1,3 +1,4 @@
 import(igraph, jointDiag, clue, pcalg)
 importFrom(matrixcalc, is.singular.matrix)
-export(backShift, simulateInterventions, generateA, metricsThreshold)
+importFrom(reshape2, melt)
+export(backShift, simulateInterventions, generateA, metricsThreshold, plotGraphEdgeAttr)

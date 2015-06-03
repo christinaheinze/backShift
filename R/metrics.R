@@ -62,7 +62,8 @@ metricsThreshold <- function(trueA, est, thres = seq(0.01, 1, by = 0.01)){
     res[t,] <- c(thres[t], unlist(metrics(trueA, est)))
   }
   res <- as.data.frame(res)
-  colnames(res) <- c("threshold", "shd", "err", "TPR.Recall", "FPR", "precision")
+  res <- res[,-3]
+  colnames(res) <- c("Threshold", "SHD", "TPR.Recall", "FPR", "Precision")
   res
 }
 

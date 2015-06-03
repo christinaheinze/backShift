@@ -2,11 +2,11 @@ Package: backShift
 Type: Package
 Title: backShift
 Version: 0.1
-Date: 2015-06-05
-Author: Anonymous
+Date: 2015-06-03
+Author: Anonymous Author <name@institution.edu>
 Depends: R (>= 3.1.0)
-Imports: jointDiag, clue, pcalg, igraph, matrixcalc
+Imports: jointDiag, clue, pcalg, igraph, matrixcalc, reshape2
 Maintainer: Anonymous Author <name@institution.edu>
-Description: Code for NIPS submission BACKSHIFT: Learning causal cyclic graphs from unknown shift interventions
+Description: Code for backShift.
 License: GPL
 LazyData: true
