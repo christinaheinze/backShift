@@ -1,5 +1,5 @@
-\name{hiddenICE}
-\alias{hiddenICE}
+\name{backShift}
+\alias{backShift}
 \title{
 Estimate connectivity matrix of a directed graph with linear effects and hidden variables. 
 }
@@ -10,7 +10,7 @@ It is assumed that equilibrium data are observed so that X = X \%*\% A + I, wher
 The goal is to estimate the connectivity matrix A.
 }
 \usage{
-hiddenICE(X, ExpInd, covariance=TRUE, alpha = 0.1, 
+backShift(X, ExpInd, covariance=TRUE, ev = 0.1, 
                            threshold =0.75, nsim=100, 
                            sampleSettings=1/sqrt(2), sampleObservations=1/sqrt(2), 
                            nodewise=TRUE, warnings= FALSE )
@@ -27,8 +27,8 @@ hiddenICE(X, ExpInd, covariance=TRUE, alpha = 0.1,
 A boolean variable. If \code{TRUE}, use only shift in covariance matrix; otherwise use shift in Gram matrix.
 Set only to \code{FALSE} if at most one variable has a non-zero shift in mean in the same setting (default is \code{TRUE}).
 }
-  \item{alpha}{
- The expected number of false selections for stability selection. No stability selection computed if \code{alpha}=0.
+  \item{ev}{
+ The expected number of false selections for stability selection. No stability selection computed if \code{ev}=0.
 }
   \item{threshold}{
   The selection threshold for stability selection (has to be between 0.5 and 1). Edges which are selected with empirical proportion higher than \code{threshold} will be retained. 
@@ -59,7 +59,7 @@ Error control is valid (under exchangeability assumption) in both cases. The lat
 \value{
 A list with elements
   \item{Ahat}{The connectivity matrix where entry (i,j) is the effect pointing from variable i to variable j.}
-  \item{AhatAdjacency}{If \code{alpha}>0, the connectivity matrix retained by stability selection. 
+  \item{AhatAdjacency}{If \code{ev}>0, the connectivity matrix retained by stability selection. 
        Entries give the rounded percentage of times the edge has been retained (and 0 if below the critical threshold).}
 }
 \references{
@@ -97,15 +97,13 @@ Anonymous
         Perturb[ind,] <- sweep( matrix(rnorm(length(ind)*p),ncol=p), 2, multiplier,FUN="*")
      }
   
-    ## iterate feedback model for get stable solution
-     niter <- 100
-     for (iter in 1:niter){
-         X <- X \%*\% A + Input + Perturb 
-     }
+    ## solve for X to get stable solution
+    inv <- solve(diag(p) - A)
+    X <- (Input + Perturb)\%*\%inv
    
 
 ####### Compute feedback estimator with E(V)<=1
-      network <- hiddenICE(X,ExpInd,alpha=1)
+      network <- backShift(X,ExpInd,ev=1)
 
  ###### Print point estimates and stable edges
       print(A) ## true connectivity matrix
