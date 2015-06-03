@@ -1,6 +1,6 @@
-backShift <- function(X, ExpInd, covariance=TRUE, alpha=0.1, threshold =0.75, nsim=100, 
+backShift <- function(X, ExpInd, covariance=TRUE, ev=0, threshold =0.75, nsim=100, 
                       sampleSettings=1/sqrt(2), sampleObservations=1/sqrt(2), nodewise=TRUE, 
-                      warnings=FALSE, tolerance = 10^(-4), baseSettingEnv = 1, verbose = FALSE){
+                      tolerance = 10^(-4), baseSettingEnv = 1, verbose = FALSE){
 
     if(!is.matrix(X) & !is.data.frame(X)) stop("'X' must be a matrix of data frame")
 
@@ -9,7 +9,7 @@ backShift <- function(X, ExpInd, covariance=TRUE, alpha=0.1, threshold =0.75, ns
     
     if(!is.vector(ExpInd)) stop("ExpInd must be a vector")
     if( length(ExpInd) != nrow(X)) stop(" 'ExpInd' must have as many entries as X has rows")
-    if(alpha<0) stop("alpha must be non-negative")
+    if(ev<0) stop("ev must be non-negative")
     if( threshold <=0.5 | threshold >1) stop("threshold must be between 0.5 and 1")
     if(nsim < 2) stop("'nsim' must be at least 2 (but usually at least 20-100")
     if(length((settings <- unique(ExpInd)))<2) stop("need at least three different settings")
@@ -17,7 +17,7 @@ backShift <- function(X, ExpInd, covariance=TRUE, alpha=0.1, threshold =0.75, ns
     if(sampleObservations<=0) stop("sampleObservations needs to be positive")
     if(sampleSettings>1) stop("sampleSettings needs to be at most 1")
     if(sampleObservations>1) stop("sampleObservations needs to be at most 1")
-    q <- if(!nodewise) sqrt(alpha*(2*threshold-1)*(p^2-p)) else sqrt(alpha*(2*threshold-1))
+    q <- if(!nodewise) sqrt(ev*(2*threshold-1)*(p^2-p)) else sqrt(ev*(2*threshold-1))
     subs <- sampleSettings* length(settings)
     drawE <- function(x){
         z <- floor(x)
@@ -54,7 +54,7 @@ backShift <- function(X, ExpInd, covariance=TRUE, alpha=0.1, threshold =0.75, ns
     Ahat <- res.point.est$Ahat
     varEnv <- computeVarEnv(res.point.est$rescaledDhat, Deltalist, baseSettingEnv)
 
-    if(alpha>0){
+    if(ev>0){
         if(verbose){
           cat("Starting stability selection... \n")
         }
