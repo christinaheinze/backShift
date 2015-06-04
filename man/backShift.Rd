@@ -4,15 +4,24 @@
 Estimate connectivity matrix of a directed graph with linear effects and hidden variables. 
 }
 \description{
-Estimates the connectivity matrix of a directed graph where effects are assumed 
-to be linear, hidden variables are allowed and interventions have to be additive 
-in nature. It is assumed that equilibrium data are observed so that 
-X = X \%*\% A + I, where X is the matrix of observations, A the connectivity 
-matrix and I is the noise for each variable. (The noise I can be correlated across variables, but has to change between the different settings.)
-The goal is to estimate the connectivity matrix A.
+This function estimates the connectivity matrix of a directed
+(possibly cyclic) graph with hidden variables. The underlying system is required 
+to be linear and we assume that observations under different shift interventions 
+are available. More precisely, the function takes as an input an (nxp) data matrix, 
+where \eqn{n} is the sample size and \eqn{p} the number of variables. In each environment 
+\eqn{j} (\eqn{j} in \{\eqn{1, \ldots, J}\}) we have observed \eqn{n_j} samples generated from
+\deqn{X_j= X_j %*% A + c_j + e_j}
+(in case of cycles this should be understood as an equilibrium
+distribution). The \eqn{c_j} is a p-dimensional random vector that is assumed to have a diagonal
+covariance matrix. The noise vector \eqn{e_j} is assumed to have the same distribution 
+in all environments \eqn{j} but is allowed to have an arbitrary covariance matrix.
+The different intervention settings are provided to the method with the
+help of the vector \code{ExpInd} of length \eqn{n = (n_1 + ... + n_j + ... + n_J)}.
+The goal is to estimate the connectivity matrix \eqn{A}.
+
 }
 \usage{
-backShift(X, ExpInd, covariance=TRUE, ev=0.1, threshold =0.75, nsim=100, 
+backShift(X, ExpInd, covariance=TRUE, ev=0, threshold =0.75, nsim=100, 
           sampleSettings=1/sqrt(2), sampleObservations=1/sqrt(2), nodewise=TRUE, 
           tolerance = 10^(-4), baseSettingEnv = 1, verbose = FALSE)
 }
