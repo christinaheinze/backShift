@@ -1,5 +1,27 @@
-
-simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult, nonGauss, fracVarInt, hiddenVars, 
+#' Simulates data.
+#' 
+#' @param n Number of observations.
+#' @param p Number of variables.
+#' @param A Connectivity matrix A. The entry \eqn{A_{ij}} contains the edge 
+#'        from node i to node j.
+#' @param G Number of environments.
+#' @param intervMultiplier Regulates the strength of the interventions.
+#' @param noiseMult Regulates the noise variance.
+#' @param nonGauss Set to \code{TRUE} to generate non-Gaussian noise.
+#' @param fracVarInt
+#' @param hiddenVars
+#' @param knownInterventions
+#' @param 
+#' @return A list with the following elements: 
+#' \itemize{
+#'   \item First item
+#'   \item Second item
+#' }
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
+simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult, 
+                                  nonGauss, fracVarInt, hiddenVars, 
                                   knownInterventions, simulateObs,  seed =1){
   ####### set seed
   set.seed(seed)
