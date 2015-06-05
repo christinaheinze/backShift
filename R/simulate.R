@@ -1,4 +1,7 @@
-#' Simulates data.
+#' Simulate data of a causal cyclic model under shift interventions.
+#' 
+#' @description Learning causal cyclic graphs from unknown shift interventions
+#' @details Learning causal cyclic graphs from unknown shift interventions
 #' 
 #' @param n Number of observations.
 #' @param p Number of variables.
@@ -11,11 +14,23 @@
 #' @param fracVarInt
 #' @param hiddenVars
 #' @param knownInterventions
-#' @param 
+#' @param simulateObs 
+#' @param seed
 #' @return A list with the following elements: 
 #' \itemize{
-#'   \item First item
-#'   \item Second item
+#'   \item X
+#'   \item trueA 
+#'   \item environment
+#'   \item interventions
+#'   \item G
+#'   \item indexObservationalData
+#'   \item varInts
+#'   \item intervMultiplier 
+#'   \item noiseMult
+#'   \item fracVarInt
+#'   \item hiddenVars 
+#'   \item knownInterventions 
+#'   \item simulateObs
 #' }
 #' @examples
 #' add(1, 1)

@@ -25,7 +25,18 @@ plotGraph <- function(A, main="",labels=NULL,layoutfunction=layout.circle,...){
     return(layout)
 }
 
-plotGraphEdgeAttr <- function(pointEst, labels, thres.point, adjacencyEst, plotStabSelec, thres.stab, main, ...){
+#' Plots graph from adjacency matrix.
+#'
+#' @param pointEst
+#' @param labels
+#' @param thres.point
+#' @param adjacencyEst
+#' @param plotStabSelec
+#' @param thres.stab
+#' @param main
+#' @param ...
+plotGraphEdgeAttr <- function(pointEst, labels, thres.point, adjacencyEst, 
+                              plotStabSelec, thres.stab, main, ...){
   
   # stability selection output
   df.As <- melt(as.matrix(adjacencyEst))

@@ -52,6 +52,14 @@ metrics <- function(trueA, estA){
   list(shd = shd, err = err, TPR.Recall = TPR, FPR = FPR, precision = precision)
 }
 
+
+#' Computes some performance metrics for estimate of connectiviy matrix A.
+#'
+#' @param trueA
+#' @param est
+#' @param thres
+#'
+#' @return res
 metricsThreshold <- function(trueA, est, thres = seq(0.01, 1, by = 0.01)){
   trueA <- as.matrix(trueA)
   est <- as.matrix(est)
