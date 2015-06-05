@@ -3,10 +3,10 @@ Type: Package
 Title: backShift
 Version: 0.1
 Date: 2015-06-03
-Author: Anonymous Author <name@institution.edu>
+Author: Christina Heinze <heinze@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
 Imports: jointDiag, clue, pcalg, igraph, matrixcalc, reshape2
-Maintainer: Anonymous Author <name@institution.edu>
+Maintainer: Christina Heinze <heinze@stat.math.ethz.ch>
 Description: Code for backShift.
 License: GPL
 LazyData: true

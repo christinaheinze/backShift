@@ -23,6 +23,8 @@ permuteAndScale <- function(Dhat, verbose = FALSE){
     }
   }
   
+  p <- nrow(Dhat)
+  
   # scale
   rescaledDhat <- diag(1/diag(Dhat))%*% Dhat
   Ahat <- diag(p) - t(rescaledDhat)

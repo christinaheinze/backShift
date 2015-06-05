@@ -9,6 +9,8 @@ computeVarEnv <- function(B, DeltaList, base.setting.index = 1, verbose = FALSE)
     DiagList[[i]] <- B %*% DeltaList[[i]] %*% t(B)
   }
   
+  p <- nrow(B)
+  
   relIntVars <- matrix(0, G, p)
   base.setting <- DiagList[[base.setting.index]]
   for(i in 1:G){
