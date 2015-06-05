@@ -10,7 +10,7 @@ to be linear and we assume that observations under different shift interventions
 are available. More precisely, the function takes as an input an (nxp) data matrix, 
 where \eqn{n} is the sample size and \eqn{p} the number of variables. In each environment 
 \eqn{j} (\eqn{j} in \{\eqn{1, \ldots, J}\}) we have observed \eqn{n_j} samples generated from
-\deqn{X_j= X_j %*% A + c_j + e_j}
+\deqn{X_j= X_j \%*\% A + c_j + e_j}
 (in case of cycles this should be understood as an equilibrium
 distribution). The \eqn{c_j} is a p-dimensional random vector that is assumed to have a diagonal
 covariance matrix. The noise vector \eqn{e_j} is assumed to have the same distribution 
