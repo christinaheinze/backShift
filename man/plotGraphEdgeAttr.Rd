@@ -35,6 +35,8 @@ selection procedure. Used to determine the width of the plotted edges.}
 
 \item{main}{Provide the title of the plot.}
 
+\item{edge.color}{Color of the edges. Defaults to blue.}
+
 \item{...}{Optional arguments passed to the plotting function. Consists of
  igraph-type options like vertex.label.cex,vertex.label.color, edge.arrow.size
  or vertex.size etc.}
@@ -42,7 +44,7 @@ selection procedure. Used to determine the width of the plotted edges.}
 \description{
 Given a point estimate of the connectivety matrix or the
  adjacency matrix, this function visualizes the directed graph using
- \code{\link[iGraph]{plot}} from the package \code{iGraph}. If a point estimate
+ \code{\link[igraph]{plot}} from the package \code{igraph}. If a point estimate
  is plotted, the edges' intensity reflects the magnitude of the coefficients.
  If the result is an adjacency matrix estimated by stability selection then
  the edges' width reflects how often an edge was selected and the intensity
@@ -50,7 +52,7 @@ Given a point estimate of the connectivety matrix or the
  provided).
 }
 \details{
-Currently not all options of \code{iGraph} are used; additional
+Currently not all options of \code{igraph} are used; additional
  arguments are ignored.
 }
 \examples{
