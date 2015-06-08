@@ -13,14 +13,12 @@ from node i to node j.
 \format{
   A matrix with 10 rows and 10 columns. 
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%% Used in simulations in 
+  Used in simulations in:
+
+ Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
+ backShift: Learning causal cyclic graphs from unknown shift interventions
+ %arxiv preprint \url{http://arxiv.org/abs/}
 }
 \examples{
 data("exampleAdjacencyMatrix")

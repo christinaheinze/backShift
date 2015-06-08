@@ -1,7 +1,7 @@
 Package: backShift
 Type: Package
 Title: Learning Causal Cyclic Graphs from Unknown Shift Interventions
-Version: 0.1
+Version: 0.1.0
 Date: 2015-06-05
 Author: Christina Heinze <heinze@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
