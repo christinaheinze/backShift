@@ -1,43 +1,51 @@
 #' Simulate data of a causal cyclic model under shift interventions.
 #' 
-#' @description Learning causal cyclic graphs from unknown shift interventions
-#' @details Learning causal cyclic graphs from unknown shift interventions
+#' @description Simulate data of a causal cyclic model under shift interventions.
 #' 
 #' @param n Number of observations.
 #' @param p Number of variables.
 #' @param A Connectivity matrix A. The entry \eqn{A_{ij}} contains the edge 
 #'        from node i to node j.
-#' @param G Number of environments.
+#' @param G Number of environments, has to be larger than two for \code{backShift}.
 #' @param intervMultiplier Regulates the strength of the interventions.
 #' @param noiseMult Regulates the noise variance.
 #' @param nonGauss Set to \code{TRUE} to generate non-Gaussian noise.
-#' @param fracVarInt
-#' @param hiddenVars
-#' @param knownInterventions
-#' @param simulateObs 
-#' @param seed
+#' @param hiddenVars Set to \code{TRUE} to include hidden variables.
+#' @param knownInterventions Set to \code{TRUE} if location of interventions
+#'  should be known.
+#' @param fracVarInt If \code{knownInterventions} is \code{TRUE}, fraction of 
+#'  variables that are intervened on in each environment.
+#' @param simulateObs If \code{TRUE}, also generate observational data.
+#' @param seed Random seed.
 #' @return A list with the following elements: 
 #' \itemize{
-#'   \item X
-#'   \item trueA 
-#'   \item environment
-#'   \item interventions
-#'   \item G
-#'   \item indexObservationalData
-#'   \item varInts
-#'   \item intervMultiplier 
-#'   \item noiseMult
-#'   \item fracVarInt
-#'   \item hiddenVars 
-#'   \item knownInterventions 
-#'   \item simulateObs
+#'   \item \code{X} (nxp)-dimensional data matrix
+#'   \item \code{environment} Indicator of the experiment or the intervention type an 
+#'   observation belongs to. A numeric vector of length n. 
+#'   \item \code{interventionVar} (Gxp)-dimensional matrix with intervention variances.
+#'   \item \code{interventions} Location of interventions if \code{knownInterventions}
+#'    was set to \code{TRUE}.
+#'   \item \code{configs} A list with the following elements: 
+#'   \itemize{
+#'   \item \code{trueA} True connectivity matrix used to generate the data.
+#'   \item \code{G} Number of environments.
+#'   \item \code{indexObservationalData} Index of observational data
+#'   \item \code{intervMultiplier} Multiplier steering the intervention strength
+#'   \item \code{noiseMult} Multiplier steering the noise level
+#'   \item \code{fracVarInt}  If \code{knownInterventions} was set to \code{TRUE}, 
+#'    fraction of variables that were intervened on in each environment.
+#'   \item \code{hiddenVars} If \code{TRUE}, hidden variables exist.
+#'   \item \code{knownInterventions} If \code{TRUE}, location of interventions is known.
+#'   \item \code{simulateObs} If \code{TRUE}, environment \code{1} contains 
+#'    observational data.
+#'   }
 #' }
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' @references Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
+#' backShift: Learning causal cyclic graphs from unknown shift interventions
+#' %arxiv preprint \url{http://arxiv.org/abs/}
 simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult, 
-                                  nonGauss, fracVarInt, hiddenVars, 
-                                  knownInterventions, simulateObs,  seed =1){
+                                  nonGauss, hiddenVars, knownInterventions, 
+                                  fracVarInt, simulateObs,  seed =1){
   ####### set seed
   set.seed(seed)
   
@@ -118,73 +126,15 @@ simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult,
   inv <- solve(diag(p) - A)
   X <- (Input + Perturb)%*%inv
   
-  list(X = X, trueA = A, environment = environment, 
+  config.options <- list(trueA = A, G = G, indexObservationalData = idxObs,
+                         intervMultiplier = intervMultiplier, 
+                         noiseMult = noiseMult, fracVarInt = fracVarInt, 
+                         hiddenVars = hiddenVars, 
+                         knownInterventions = knownInterventions, 
+                         simulateObs = simulateObs)
+  
+  list(X = X, environment = environment, 
+       interventionVar = envVar, 
        interventions = interventions, 
-       G = G, n = n, p = p, indexObservationalData = idxObs, varInts = envVar, 
-       intervMultiplier = intervMultiplier, noiseMult = noiseMult, 
-       fracVarInt = fracVarInt, hiddenVars = hiddenVars, 
-       knownInterventions = knownInterventions, simulateObs = simulateObs)
+       configs = config.options)
 }
-
-
-generateA <- function(p, expNumNeigh, minCoef, maxCoef, cyclic, verbose = FALSE){
-  graph.obj <- randDAG(p, expNumNeigh, wFUN=list(runif, min=minCoef, max=maxCoef))
-  A <- as(graph.obj, "matrix")
-  
-  while(sum(A) == 0){ # do not want to get empty graph
-    graph.obj <- randDAG(p, expNumNeigh, wFUN=list(runif, min=minCoef, max=maxCoef))
-    A <- as(graph.obj, "matrix")
-  }
-  
-  # reverse sign of half the entries
-  nz <- which(abs(A) > 0, arr.ind = F)
-  reverse.ind <- sample(1:length(nz), ceiling(length(nz)/2))
-  for(i in 1:length(reverse.ind)) A[nz[reverse.ind[i]]] <- - A[nz[reverse.ind[i]]]
-  
-  if(cyclic){
-    candidate <- addCycle(A, p, minCoef, maxCoef)
-    
-    # check whether I-A is invertible and whether A has CP < 1
-    Dhat <- t(diag(p) - candidate$A)
-    while(is.singular.matrix(Dhat) && !hasCPsmallerOne(Dhat, FALSE)$success){
-      candidate <- addCycle(A, p, minCoef, maxCoef)
-      if(verbose) cat("I - A is singular or has CP >= 1, regenerating A...")
-    }
-    
-    A <- candidate$A
-    sizeCycle <- candidate$sizeCycle
-    if(verbose) cat('Graph contains cycle of size', sizeCycle, '\n')
-  }else{
-    sizeCycle <- NULL
-  }
-  list(A = A, sizeCycle = sizeCycle)
-}
-
-
-hasCycles <- function(A, verbose = FALSE){ 
-  G <- graph.adjacency(A,mode="directed",weighted="a")
-  cyc <- !is.dag(G)
-  if(verbose) if(cyc) cat('Graph is cyclic\n') else cat('Graph is acyclic\n')
-  cyc
-}
-
-
-addCycle <- function(A, p, minCoef, maxCoef){
-  # add cycles
-  sample.func <- function(i) 
-    sample(c(runif(i, min = minCoef, max = maxCoef), 
-             runif(i, min = -maxCoef, max = -minCoef)), i)
-  
-  while(!hasCycles(A)){
-    G <- graph.adjacency(A,mode="directed",weighted="a")
-    nz <- which(abs(A) > 0, arr.ind = TRUE)
-    sample.node <- sample(as.numeric(nz[,1]), 1)
-    dfs.result <- graph.dfs(G, root = sample.node, unreachable = FALSE, dist = TRUE) 
-    furthest.dis.from.sample.node <- max(dfs.result$dist, na.rm = TRUE) + 1
-    furthest.from.sample.node <- which.max(dfs.result$dist)
-    A[furthest.from.sample.node, sample.node] <- sample.func(1)
-    diag(A) <- 0
-  }
-  list(A = A, sizeCycle = furthest.dis.from.sample.node)
-}
-

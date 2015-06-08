@@ -7,6 +7,9 @@ Author: Christina Heinze <heinze@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
 Imports: jointDiag, clue, pcalg, igraph, matrixcalc, reshape2
 Maintainer: Christina Heinze <heinze@stat.math.ethz.ch>
-Description: Code for backShift.
+Description: Code for backShift, an algorithm to estimate the connectivity 
+  matrix of a directed (possibly cyclic) graph with hidden variables. The 
+  underlying system is required to be linear and we assume that observations 
+  under different shift interventions are available.
 License: GPL
 LazyData: true

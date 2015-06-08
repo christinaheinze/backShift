@@ -2,29 +2,70 @@
 % Please edit documentation in R/plotGraph.R
 \name{plotGraphEdgeAttr}
 \alias{plotGraphEdgeAttr}
-\title{Plots graph from adjacency matrix.}
+\title{Plotting function to visualize directed graphs}
 \usage{
-plotGraphEdgeAttr(pointEst, labels, thres.point, adjacencyEst, plotStabSelec,
-  thres.stab, main, ...)
+plotGraphEdgeAttr(estimate, plotStabSelec, labels, thres.point,
+  edgeWeights = NULL, thres.stab = 0.75, main = "", edge.color = "blue",
+  ...)
 }
 \arguments{
-\item{pointEst}{}
+\item{estimate}{Estimate of connectivity matrix. This can be a point estimate
+with entry \eqn{A_{ij}} being the estimated edge weight for the edge from
+node \eqn{i} to node \eqn{j}. Otherwise, it can be the estimated adjacency
+matrix by a stability selection procedure as in \code{\link{backShift}}. In
+this case, the entry \eqn{A_{ij}} indicates how often the edge from
+node \eqn{i} to node \eqn{j} was selected.}
 
-\item{labels}{}
+\item{plotStabSelec}{Set to TRUE if \code{estimate} results from the stability
+selection procedure. Otherwise, \code{estimate} is assumed to be a point
+estimate.}
 
-\item{thres.point}{}
+\item{labels}{Variable labels to be displayed in plot.}
 
-\item{adjacencyEst}{}
+\item{thres.point}{Value at which the point estimate should be thresholded,
+i.e. edges with coefficients smaller than \code{thres.point} are not
+displayed.}
 
-\item{plotStabSelec}{}
+\item{edgeWeights}{If stability selection result should be visualized,
+provide edgeWeights as a (pxp)-matrix to display the magnitude of the
+coefficients as the intensity of the edges.}
 
-\item{thres.stab}{}
+\item{thres.stab}{Indicate the threhold value that was used in the stability
+selection procedure. Used to determine the width of the plotted edges.}
 
-\item{main}{}
+\item{main}{Provide the title of the plot.}
 
-\item{...}{}
+\item{...}{Optional arguments passed to the plotting function. Consists of
+ igraph-type options like vertex.label.cex,vertex.label.color, edge.arrow.size
+ or vertex.size etc.}
 }
 \description{
-Plots graph from adjacency matrix.
+Given a point estimate of the connectivety matrix or the
+ adjacency matrix, this function visualizes the directed graph using
+ \code{\link[iGraph]{plot}} from the package \code{iGraph}. If a point estimate
+ is plotted, the edges' intensity reflects the magnitude of the coefficients.
+ If the result is an adjacency matrix estimated by stability selection then
+ the edges' width reflects how often an edge was selected and the intensity
+ reflects the magnitude of the coefficients (if this information is also
+ provided).
+}
+\details{
+Currently not all options of \code{iGraph} are used; additional
+ arguments are ignored.
+}
+\examples{
+# create a matrix A to be visualized
+p <- 3
+A <- diag(p)*0
+A[1,2] <- 0.8
+A[2,3] <- -0.8
+A[3,1] <- 0.8
+
+# add column names to use as labels for nodes
+colnames(A) <- c("1", "2", "3")
+
+# plot
+plotGraphEdgeAttr(estimate = A, plotStabSelec = FALSE, labels = colnames(A),
+                   thres.point = 0, thres.stab = NULL, main = "True graph")
 }
 

@@ -1,26 +1,33 @@
 permuteAndScale <- function(Dhat, verbose = FALSE){
   # finds the permutation of Dhat that yields Bhat, having a cycle product smaller than one
   # if such a permutation exsist
-  
+
   # check whether Dhat already has a CP < 1, if not permute
   if(largestRowElemNotOnDiagonal(Dhat)){
-    if(verbose) cat('The largest row element does not lie on diagonal. Checking whether permutation is stable.\n')
+    if(verbose) 
+      cat('The largest row element does not lie on diagonal.',
+          'Checking whether permutation is stable.\n')
     
     if(possibleToPutLargestRowElemOnDiagonal(Dhat)){
       if(verbose) cat('Permutation is trivial... \n')
       Dhat <- putLargestRowElemOnDiagonal(Dhat)
     }else if(hasCPsmallerOne(Dhat, returnCycleNodes = FALSE)$success){
-      if(verbose) cat('Permutation is stable as all cycle products are smaller than one. \n')
+      if(verbose) 
+        cat('Permutation is stable as all cycle products are smaller than one.\n')
     }else{
-      if(verbose) cat('Permuting rows to find stable model... \n')
-      res.perm <- permute(Dhat)
+      if(verbose) cat('Permuting rows to find stable model...\n')
+      res.perm <- permute(Dhat, verbose)
       
       if(!res.perm$success){
-        warning('Estimate has CP >=1. Model assumptions are not met. 
-                Returning the empty graph. \n')
+        warning('Estimate has CP >=1. Model assumptions are not met.', 
+                'Returning the empty graph.\n')
       }
       Dhat <- res.perm$Dhat
     }
+  }else{
+    if(verbose)
+      cat('The largest row element lies on diagonal.',
+          'So the permutation is stable.\n')
   }
   
   p <- nrow(Dhat)
@@ -68,7 +75,7 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
   # if all elements are smaller than 1 or equal to 1, return TRUE
   if(nrow(entries.larger.than.1) == 0){
     if(verbose){
-      cat("There are no entries >= 1 in candidate. Thus the model is stable. \n")
+      cat("There are no entries >= 1 in candidate. Thus the model is stable.\n")
     }
     return(list(success = TRUE, cycleNodes = NULL))
   }
@@ -84,7 +91,7 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
     G.larger1 <- graph.adjacency(Ahat.larger.1,mode="directed",weighted="a")
     if(!is.dag(G.larger1)){
       if(verbose){
-        cat("Edges with weights larger than 1 form a cycle. Model is not stable. \n")
+        cat("Edges with weights larger than 1 form a cycle. Model is not stable.\n")
       }
       return(list(success = FALSE, cycleNodes = NULL))
     }
@@ -107,7 +114,8 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
     largest.candidate <- abs(max(ordered.list.of.magnitudes[ordered.list.of.magnitudes < 1]))
     if(largest.candidate*product.nodes.larger.one < 1){
       if(verbose){
-        cat("Largest entry smaller than 1", largest.candidate, "will not yield cycle with product >= 1. Model is stable. \n")
+        cat("Largest entry smaller than 1", largest.candidate, 
+            "will not yield cycle with product >= 1. Model is stable. \n")
       }
       return(list(success = TRUE, cycleNodes = NULL))
     }
@@ -132,12 +140,14 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
   }
 
   if(verbose){
-    cat("Reducing the node set from", p, "to", p-length(rows.cols.to.delete), "nodes and running Floyd-Warshall. \n")
+    cat("Reducing the node set from", p, "to", 
+        p-length(rows.cols.to.delete), "nodes and running Floyd-Warshall. \n")
   }
   
   if(p - length(rows.cols.to.delete) <= 1){
     if(verbose){
-      cat("All cycle products are smaller than one as only one node remained after deleting irrelevant ones.\n")
+      cat("All cycle products are smaller than one as only one node', 
+          'remained after deleting irrelevant ones.\n")
     }
     return(list(success = TRUE, cycleNodes = NULL))
   }
@@ -166,8 +176,10 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
           # if now the cycle product is >= 1, found inadmissible model
           if(cp.mat[i,j] >= 1){
             if(verbose){
-              cat("Cycle found with length", cp.mat[i,j], "at node", i, ". Model is not stable. \n")
-              cat('Involved inner nodes are', nodes.in.path.from.i.to.i[[i]], '.\n')
+              cat("Cycle found with length", cp.mat[i,j], "at node", i, 
+                  ". Model is not stable. \n")
+              cat('Involved inner nodes are', 
+                  nodes.in.path.from.i.to.i[[i]], '.\n')
             }
             nodes.involved.in.cycle <- c(i, nodes.in.path.from.i.to.i[[i]])
             return(list(success = FALSE, cycleNodes = nodes.involved.in.cycle))
@@ -178,7 +190,8 @@ hasCPsmallerOne <- function(Dhat, returnCycleNodes, verbose = FALSE){
   }
   
   if(verbose){
-    cat("All cycle products are smaller than one. Largest one is", max(diag(cp.mat)), ".\n")
+    cat("All cycle products are smaller than one. Largest one is", 
+        max(diag(cp.mat)), ".\n", fill = TRUE)
   }
   
   return(list(success = TRUE, cycleNodes = NULL))
@@ -201,7 +214,9 @@ permute <- function(Dhat, verbose = FALSE){
     if(verbose) cat('The permutation has a cycle product < 1. \n')
     res <- list(Dhat = Dhat.tilde, success = TRUE)
   }else{
-    if(verbose) cat('No permutation with cycle product < 1 found. Returning the empty graph.\n')
+    if(verbose) 
+      cat('No permutation with cycle product < 1 found.', 
+          'Returning the empty graph.\n')
     res <- list(Dhat = diag(p), success = FALSE)
   }
   return(res)

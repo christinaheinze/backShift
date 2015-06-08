@@ -5,7 +5,7 @@
 \title{Simulate data of a causal cyclic model under shift interventions.}
 \usage{
 simulateInterventions(n, p, A, G, intervMultiplier, noiseMult, nonGauss,
-  fracVarInt, hiddenVars, knownInterventions, simulateObs, seed = 1)
+  hiddenVars, knownInterventions, fracVarInt, simulateObs, seed = 1)
 }
 \arguments{
 \item{n}{Number of observations.}
@@ -15,7 +15,7 @@ simulateInterventions(n, p, A, G, intervMultiplier, noiseMult, nonGauss,
 \item{A}{Connectivity matrix A. The entry \eqn{A_{ij}} contains the edge
 from node i to node j.}
 
-\item{G}{Number of environments.}
+\item{G}{Number of environments, has to be larger than two for \code{backShift}.}
 
 \item{intervMultiplier}{Regulates the strength of the interventions.}
 
@@ -23,42 +23,49 @@ from node i to node j.}
 
 \item{nonGauss}{Set to \code{TRUE} to generate non-Gaussian noise.}
 
-\item{fracVarInt}{}
+\item{hiddenVars}{Set to \code{TRUE} to include hidden variables.}
 
-\item{hiddenVars}{}
+\item{knownInterventions}{Set to \code{TRUE} if location of interventions
+should be known.}
 
-\item{knownInterventions}{}
+\item{fracVarInt}{If \code{knownInterventions} is \code{TRUE}, fraction of
+variables that are intervened on in each environment.}
 
-\item{simulateObs}{}
+\item{simulateObs}{If \code{TRUE}, also generate observational data.}
 
-\item{seed}{}
+\item{seed}{Random seed.}
 }
 \value{
 A list with the following elements:
 \itemize{
-  \item X
-  \item trueA
-  \item environment
-  \item interventions
-  \item G
-  \item indexObservationalData
-  \item varInts
-  \item intervMultiplier
-  \item noiseMult
-  \item fracVarInt
-  \item hiddenVars
-  \item knownInterventions
-  \item simulateObs
+  \item \code{X} (nxp)-dimensional data matrix
+  \item \code{environment} Indicator of the experiment or the intervention type an
+  observation belongs to. A numeric vector of length n.
+  \item \code{interventionVar} (Gxp)-dimensional matrix with intervention variances.
+  \item \code{interventions} Location of interventions if \code{knownInterventions}
+   was set to \code{TRUE}.
+  \item \code{configs} A list with the following elements:
+  \itemize{
+  \item \code{trueA} True connectivity matrix used to generate the data.
+  \item \code{G} Number of environments.
+  \item \code{indexObservationalData} Index of observational data
+  \item \code{intervMultiplier} Multiplier steering the intervention strength
+  \item \code{noiseMult} Multiplier steering the noise level
+  \item \code{fracVarInt}  If \code{knownInterventions} was set to \code{TRUE},
+   fraction of variables that were intervened on in each environment.
+  \item \code{hiddenVars} If \code{TRUE}, hidden variables exist.
+  \item \code{knownInterventions} If \code{TRUE}, location of interventions is known.
+  \item \code{simulateObs} If \code{TRUE}, environment \code{1} contains
+   observational data.
+  }
 }
 }
 \description{
-Learning causal cyclic graphs from unknown shift interventions
+Simulate data of a causal cyclic model under shift interventions.
 }
-\details{
-Learning causal cyclic graphs from unknown shift interventions
-}
-\examples{
-add(1, 1)
-add(10, 1)
+\references{
+Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
+backShift: Learning causal cyclic graphs from unknown shift interventions
+%arxiv preprint \url{http://arxiv.org/abs/}
 }
 

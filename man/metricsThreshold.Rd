@@ -2,21 +2,49 @@
 % Please edit documentation in R/metrics.R
 \name{metricsThreshold}
 \alias{metricsThreshold}
-\title{Computes some performance metrics for estimate of connectiviy matrix A.}
+\title{Performance metrics for estimate of connectiviy matrix A.}
 \usage{
 metricsThreshold(trueA, est, thres = seq(0.01, 1, by = 0.01))
 }
 \arguments{
-\item{trueA}{}
+\item{trueA}{True connectivity matrix}
 
-\item{est}{}
+\item{est}{Estimated connectivity matrix}
 
-\item{thres}{}
+\item{thres}{Value at which the point estimate should be thresholded, i.e.
+edges with coefficients smaller than thres are discarded. Can be a sequence
+of values.}
 }
 \value{
-res
+A data frame with the following columns:
+\itemize{
+ \item \code{Threshold} Value at which point estimate \code{est} was thresholded.
+ \item \code{SHD} Structural Hamming distance between \code{trueA} and \code{est}.
+ \item \code{TPR.Recall} True positive rate / recall value
+ \item \code{FPR} False positive rate
+ \item \code{Precision} Precision value
+ }
 }
 \description{
-Computes some performance metrics for estimate of connectiviy matrix A.
+Computes various performance metrics for estimate of
+ connectiviy matrix A.
+}
+\examples{
+# true A
+p  <- 3
+A <- diag(p)*0
+A[1,2] <- 0.8
+A[2,3] <- -0.8
+A[3,1] <- 0.8
+
+# say an estimated connectivity matrix is given by:
+A.est <- matrix(rnorm(p*p, 1e-3, 1e-3), ncol = p)
+diag(A.est) <- 0
+A.est[1,2] <- 0.76
+A.est[2,3] <- -0.68
+A.est[3,1] <- 0.83
+
+# compute metrics with threshold 0.25
+metricsThreshold(A, A.est, thres = 0.25)
 }
 

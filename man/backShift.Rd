@@ -97,13 +97,18 @@ A list with elements
        }
 }
 \references{
-    None yet
+ Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
+ backShift: Learning causal cyclic graphs from unknown shift interventions
+ %arxiv preprint \url{http://arxiv.org/abs/}
 }
 \author{
 Nicolai Meinshausen <meinshausen@stat.math.ethz.ch>, 
 Christina Heinze <heinze@stat.math.ethz.ch>
 }
-
+\seealso{  \code{\link[InvariantCausalPrediction]{ICP}} and 
+  \code{\link[InvariantCausalPrediction]{hiddenICP}} for reconstructing 
+  the parents of a variable under interventions on all other variables.
+}
 \examples{
 ## Simulate data with connectivity matrix A
 
