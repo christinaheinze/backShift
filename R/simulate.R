@@ -41,8 +41,8 @@
 #'   }
 #' }
 #' @references Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
-#' backShift: Learning causal cyclic graphs from unknown shift interventions
-#' %arxiv preprint \url{http://arxiv.org/abs/}
+#' backShift: Learning causal cyclic graphs from unknown shift interventions.
+#' arXiv preprint: \url{http://arxiv.org/abs/1506.02494}
 simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult, 
                                   nonGauss, hiddenVars, knownInterventions, 
                                   fracVarInt, simulateObs,  seed =1){

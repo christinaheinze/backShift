@@ -1,8 +1,7 @@
 \name{exampleAdjacencyMatrix}
 \alias{exampleAdjacencyMatrix}
 \docType{data}
-\title{
-Example adjacency matrix
+\title{Example adjacency matrix
 }
 \description{
 An example for an adjacency matrix A to be used as input to 
@@ -18,7 +17,7 @@ from node i to node j.
 
  Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
  backShift: Learning causal cyclic graphs from unknown shift interventions
- %arxiv preprint \url{http://arxiv.org/abs/}
+ arXiv preprint: \url{http://arxiv.org/abs/1506.02494}
 }
 \examples{
 data("exampleAdjacencyMatrix")

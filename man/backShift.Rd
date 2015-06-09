@@ -98,11 +98,10 @@ A list with elements
 }
 \references{
  Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
- backShift: Learning causal cyclic graphs from unknown shift interventions
- %arxiv preprint \url{http://arxiv.org/abs/}
+ backShift: Learning causal cyclic graphs from unknown shift interventions.
+ arXiv preprint: \url{http://arxiv.org/abs/1506.02494}
 }
 \author{
-Nicolai Meinshausen <meinshausen@stat.math.ethz.ch>, 
 Christina Heinze <heinze@stat.math.ethz.ch>
 }
 \seealso{  \code{\link[InvariantCausalPrediction]{ICP}} and 

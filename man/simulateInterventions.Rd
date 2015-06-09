@@ -65,7 +65,7 @@ Simulate data of a causal cyclic model under shift interventions.
 }
 \references{
 Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (2015):
-backShift: Learning causal cyclic graphs from unknown shift interventions
-%arxiv preprint \url{http://arxiv.org/abs/}
+backShift: Learning causal cyclic graphs from unknown shift interventions.
+arXiv preprint: \url{http://arxiv.org/abs/1506.02494}
 }
 
