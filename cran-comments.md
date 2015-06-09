@@ -1,24 +1,18 @@
 ## Test environments
 * local OS X install, R 3.2.0
-* ubuntu 12.04 (on travis-ci), R 3.2.0
-* CRAN win-builder 
+* x86_64-unknown-linux-gnu, R 3.2.0
+* CRAN win-builder (R Under development (unstable) (2015-06-08 r68489), R 3.2.0)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 1 NOTE:
+There were 2 NOTES:
 
-* checking dependencies in R code ... NOTE
-  Namespace in Imports field not imported from: 'R6'
+*checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Christina Heinze <heinze@stat.math.ethz.ch>’
+New submission
 
-  R6 is a build-time dependency.
-
-## Downstream dependencies
-I have also run R CMD check on downstream dependencies of httr 
-(https://github.com/wch/checkresults/blob/master/httr/r-release). 
-All packages that I could install passed except:
-
-* Ecoengine: this appears to be a failure related to config on 
-  that machine. I couldn't reproduce it locally, and it doesn't 
-  seem to be related to changes in httr (the same problem exists 
-  with httr 0.4).
+  This is a new submission.
+  
+*checking package dependencies ... NOTE
+  No repository set, so cyclic dependency check skipped
