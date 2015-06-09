@@ -1,5 +1,4 @@
 ## Test environments
-* local OS X install, R 3.2.0
 * x86_64-unknown-linux-gnu, R 3.2.0
 * CRAN win-builder (R Under development (unstable) (2015-06-08 r68489), R 3.2.0)
 
