@@ -63,10 +63,10 @@ in the same setting (default is \code{TRUE}).
 }
 \item{nodewise}{
    If \code{FALSE}, stability selection retains for each subsample the largest 
-   overall entries in the connectivity matrix. If \code{FALSE}, values are 
+   overall entries in the connectivity matrix. If \code{TRUE}, values are 
    ordered row- and node-wise first and then the largest entries in each row 
    and column are retained. Error control is valid (under exchangeability 
-   assumption) in both cases. The latter setting \code{FALSE} is perhaps more 
+   assumption) in both cases. The latter setting \code{TRUE} is perhaps more 
    robust and is the default. 
 }
 \item{tolerance}{

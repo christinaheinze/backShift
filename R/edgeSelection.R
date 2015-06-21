@@ -1,7 +1,7 @@
 
 edgeSelection <- function(matrixA, q,  nodewise=FALSE){
   # initialize matrix
-    p <- ncol(matrixA)
+  p <- ncol(matrixA)
   AhatSelected <- matrix(0, p, p)
 
   quse <- sample( floor(c(q,q+1)), 1,prob= c(1-q+floor(q),q-floor(q)))
@@ -13,11 +13,14 @@ edgeSelection <- function(matrixA, q,  nodewise=FALSE){
       indicesSelected <- which(abs(matrixA) >= min(selected), arr.ind = TRUE)
       
       ## choose elements
-      AhatSelected[indicesSelected] <- abs(matrixA)[indicesSelected]
+      AhatSelected[indicesSelected] <- 1
   }else{
-      for (i in 1:nrow(matrixA)) AhatSelected[ i,order(abs(matrixA)[i,],rnorm(p),decreasing=TRUE)[1:quse]] <- 1
-      for (i in 1:ncol(matrixA)) AhatSelected[ order(abs(matrixA)[,i],rnorm(p),decreasing=TRUE)[1:quse],i] <- 1
+      for (i in 1:nrow(matrixA)){
+        AhatSelected[ i,order(abs(matrixA)[i,],rnorm(p),decreasing=TRUE)[1:quse]] <- 1
+        AhatSelected[ order(abs(matrixA)[,i],rnorm(p),decreasing=TRUE)[1:quse],i] <- 1
+      }
   }
+  
   ## return matrix
   AhatSelected
 }

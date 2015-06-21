@@ -79,13 +79,13 @@ simulation.res <- simulateInterventions(n, p, A, G, intMult, noiseMult,
 # extract X, environment vector and index of observational data
 X <- simulation.res$X
 env <- simulation.res$environment
-baseInd <- simulation.res$indexObservationalData
+baseInd <- simulation.res$configs$indexObservationalData
 
 ## Run backShift -------
 cat("Running backShift...\n") 
-backshift.res <- backShift(X, env, covariance=useCov,  
-                        ev=EV, threshold=thres, 
-                        baseSettingEnv = baseInd, tolerance = 1e-6, verbose = FALSE)
+backshift.res <- backShift(X, env, covariance=useCov, ev=EV, threshold=thres, 
+                        baseSettingEnv = baseInd, tolerance = 1e-6, 
+                        verbose = FALSE)
 cat("Running backShift...done!\n") 
 
 ## Results of backShift -------
