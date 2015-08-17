@@ -11,7 +11,7 @@ to be linear and we assume that observations under different shift interventions
 are available. More precisely, the function takes as an input an (nxp) data matrix, 
 where \eqn{n} is the sample size and \eqn{p} the number of variables. In each 
 environment \eqn{j} (\eqn{j} in \{\eqn{1, \ldots, J}\}) we have observed 
-\eqn{n_j} samples generated from \deqn{X_j= X_j \%*\% A + c_j + e_j}
+\eqn{n_j} samples generated from \deqn{X_j= X_j * A + c_j + e_j}
 (in case of cycles this should be understood as an equilibrium
 distribution). The \eqn{c_j} is a p-dimensional random vector that is assumed 
 to have a diagonal covariance matrix. The noise vector \eqn{e_j} is assumed to 
@@ -89,11 +89,13 @@ A list with elements
   \item{AhatAdjacency}{If \code{ev}>0, the connectivity matrix retained by 
   stability selection. Entries give the rounded percentage of times the edge has 
   been retained (and 0 if below the critical threshold).}
-  \item{varianceEnv}{
-       A (Gxp)-dimensional matrix where G is the number of unique environments.
+  \item{varianceEnv}{The estimated interventions variances up to an offset.
+        \code{varianceEnv} is a (Gxp)-dimensional matrix where G is the number 
+        of unique environments.
        The ij-th entry contains the difference
-       between the est. intervention variance of variable j in the base setting and the
-       estimated variance of variable j in environment i.
+       between the estimated intervention variance of variable j in the base setting
+       (given by input parameter \code{baseSettingEnv}) and the
+       estimated intervention variance of variable j in environment i.
        }
 }
 \references{
