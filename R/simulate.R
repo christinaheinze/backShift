@@ -64,7 +64,7 @@ simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult,
     ## simulate noise perturbations in each environment
     for (i in unique(environment)){
       ind <- which(environment==i)
-      if(!(simulateObs & i == 1)){
+      if(!(simulateObs & i == idxObs)){
         # if observational data should be simulated: no interventions in environment 1
         multiplier <- rexp(p)*intervMultiplier
         envVar[i,] <- multiplier
@@ -87,10 +87,16 @@ simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult,
     for (i in 1:n) interventions[[i]] <- sample(unique.interventions,1)[[1]]
     environment <- match(interventions, unique(interventions))
     
+    if(simulateObs){
+      obsDataPoints <- which(environment == idxObs) 
+      for(i in seq_along(obsDataPoints))
+        interventions[[ obsDataPoints[i] ]] <- numeric(0)
+    }
+    
     # additive soft interventions
     ## change level of noise for each intervention
     for (i in 1:n){
-      if(!(simulateObs & environment[i] == 1)){
+      if(is.null(idxObs) || !(simulateObs & environment[i] == idxObs)){
         # if observational data should be simulated: no interventions in environment 1
         Perturb[i, interventions[[i]]] <- 
           rnorm(length(interventions[[i]]))*envVar[environment[i],interventions[[i]]]
