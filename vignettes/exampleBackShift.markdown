@@ -162,7 +162,7 @@ NOTE: The entry A_ij contains the edge from node i to node j.
     plotGraphEdgeAttr(estimate = A, plotStabSelec = FALSE, labels = colnames(A), 
                       thres.point = 0, thres.stab = thres, main = "True graph")
 
-<img src="/figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
  
 
     cat("Plotting point estimate, thresholded at", thres.pe,"... \n") 
@@ -170,7 +170,7 @@ NOTE: The entry A_ij contains the edge from node i to node j.
                       thres.point = thres.pe, thres.stab = thres, 
                       main = paste("Point estimate thresholded at", thres.pe))
 
-<img src="/figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
  
 
     cat("Plotting stability selection result... \n") 
@@ -179,7 +179,7 @@ NOTE: The entry A_ij contains the edge from node i to node j.
                       edgeWeights = Ahat, thres.stab = thres, 
                       main = "Stability selection result")
 
-<img src="/figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
  
 ### Metrics
  
@@ -206,11 +206,11 @@ NOTE: The entry A_ij contains the edge from node i to node j.
 
     plotInterventionVar(-backshift.res$varianceEnv, simulation.res$interventionVar^2)
 
-![plot of chunk unnamed-chunk-13](/figure/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
     plotInterventionVar(-backshift.res$varianceEnv)
 
-![plot of chunk unnamed-chunk-13](/figure/unnamed-chunk-13-2.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-2.png) 
  
  
 ## Checking the model assumptions
