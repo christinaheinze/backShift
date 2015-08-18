@@ -27,6 +27,8 @@ under different shift interventions are available.
 ```{r, message = FALSE}
 # load package
 require(backShift)
+require(ggplot2)
+require(fields)
 
 # set seed
 seed <- 1
@@ -201,10 +203,28 @@ knitr::kable(metricsStabSelection, digits = 4, caption = "Metrics for stability 
 
 ## Estimating the intervention variances
 
+The location and the strength of the shift interventions can be estimated from the
+data (up to an offset). These are returned by the function `backShift()` as a 
+($G \times p$)-dimensionalmatrix `varianceEnv` where $G$ is the number of environments and
+$p$ is the number of variables. The ij-th entry contains the difference
+between the estimated intervention variance of variable j in environment i
+and the estimated intervention variance of variable j in the base setting
+(given by input parameter `baseSettingEnv`).
+
 ```{r, message=FALSE, fig.width=7.5, fig.height=7.5}
-plotInterventionVar(-backshift.res$varianceEnv, simulation.res$interventionVar^2)
-plotInterventionVar(-backshift.res$varianceEnv)
+plotInterventionVars(backshift.res$varianceEnv, simulation.res$interventionVar)
 ```
 
 
 ## Checking the model assumptions
+
+We can check the model assumptions to some extent by the success or failure of the joint 
+diagonalization procedure. The plots below show that the joint diagonalization succeeded
+for all environments as all matrices are diagonal. The values are scaled to [0,1] 
+to allow for comparability accross plots.
+
+```{r, fig.width=3, fig.height=3}
+for(i in 1:G){
+  plotDiagonalization(estConnectivity = backshift.res$Ahat, X = X, env = env, whichEnv = i)
+}
+```

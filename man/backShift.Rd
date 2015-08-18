@@ -93,9 +93,9 @@ A list with elements
         \code{varianceEnv} is a (Gxp)-dimensional matrix where G is the number 
         of unique environments.
        The ij-th entry contains the difference
-       between the estimated intervention variance of variable j in the base setting
-       (given by input parameter \code{baseSettingEnv}) and the
-       estimated intervention variance of variable j in environment i.
+       between the estimated intervention variance of variable j in environment i
+       and the estimated intervention variance of variable j in the base setting
+       (given by input parameter \code{baseSettingEnv}).
        }
 }
 \references{

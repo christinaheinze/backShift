@@ -15,7 +15,7 @@ computeVarEnv <- function(B, DeltaList, base.setting.index = 1, verbose = FALSE)
   base.setting <- DiagList[[base.setting.index]]
   for(i in 1:G){
     if(i != base.setting.index){
-      relIntVars[i,] <- (G-1)/G * diag((base.setting - DiagList[[i]]))
+      relIntVars[i,] <- (G-1)/G * diag((DiagList[[i]] - base.setting))
     }
   }
   if(verbose){

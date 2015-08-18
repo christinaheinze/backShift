@@ -1,8 +1,8 @@
 Package: backShift
 Type: Package
 Title: Learning Causal Cyclic Graphs from Unknown Shift Interventions
-Version: 0.1.1.9001
-Date: 2015-08-17
+Version: 0.1.1.9002
+Date: 2015-08-18
 Author: Christina Heinze <heinze@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
 Imports: jointDiag, clue, pcalg, igraph, matrixcalc, reshape2, ggplot2
@@ -14,5 +14,7 @@ Description: Code for 'backShift', an algorithm to estimate the connectivity
   see <http://arxiv.org/abs/1506.02494>.
 License: GPL
 LazyData: true
-Suggests: knitr, pander
+Suggests: knitr, pander, fields
 VignetteBuilder: knitr
+URL: https://github.com/christinaheinze/backShift
+BugReports: https://github.com/christinaheinze/backShift/issues

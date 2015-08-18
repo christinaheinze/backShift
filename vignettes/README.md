@@ -14,6 +14,8 @@ under different shift interventions are available.
 ```r
 # load package
 require(backShift)
+require(ggplot2)
+require(fields)
  
 # set seed
 seed <- 1
@@ -213,18 +215,34 @@ metricsStabSelection <- metricsThreshold(A, Ahat.structure, thres = 0)
  
 ## Estimating the intervention variances
  
+The location and the strength of the shift interventions can be estimated from the
+data (up to an offset). These are returned by the function `backShift()` as a 
+($G \times p$)-dimensionalmatrix `varianceEnv` where $G$ is the number of environments and
+$p$ is the number of variables. The ij-th entry contains the difference
+between the estimated intervention variance of variable j in environment i
+and the estimated intervention variance of variable j in the base setting
+(given by input parameter `baseSettingEnv`).
+ 
 
 ```r
-plotInterventionVar(-backshift.res$varianceEnv, simulation.res$interventionVar^2)
+plotInterventionVars(backshift.res$varianceEnv, simulation.res$interventionVar)
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
-
-```r
-plotInterventionVar(-backshift.res$varianceEnv)
-```
-
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-2.png) 
  
  
 ## Checking the model assumptions
+ 
+We can check the model assumptions to some extent by the success or failure of the joint 
+diagonalization procedure. The plots below show that the joint diagonalization succeeded
+for all environments as all matrices are diagonal. The values are scaled to [0,1] 
+to allow for comparability accross plots.
+ 
+
+```r
+for(i in 1:G){
+  plotDiagonalization(estConnectivity = backshift.res$Ahat, X = X, env = env, whichEnv = i)
+}
+```
+
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-2.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-3.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-4.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-5.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-6.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-7.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-8.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-9.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-10.png) 
