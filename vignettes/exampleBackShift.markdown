@@ -1,17 +1,3 @@
----
-title: "Learning cyclic causal graphs with backShift"
-author: "Christina Heinze"
-date: "2015-08-18"
-output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-vignette: >
-  %\VignetteIndexEntry{backShift demo}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
- 
-status: publish
----
  
 Example for running [backShift](http://arxiv.org/abs/1506.02494), an algorithm 
 to estimate the connectivity
