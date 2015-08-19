@@ -140,7 +140,7 @@ simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult,
                          simulateObs = simulateObs)
   
   list(X = X, environment = environment, 
-       interventionVar = envVar, 
+       interventionVar = envVar^2, 
        interventions = interventions, 
        configs = config.options)
 }
