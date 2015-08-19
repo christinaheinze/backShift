@@ -9,6 +9,8 @@ vignette: >
   %\VignetteIndexEntry{backShift demo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+
+status: process
 ---
 
 Example for running [backShift](http://arxiv.org/abs/1506.02494), an algorithm 
