@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 cran-comments.md
 ^vignettes/figure/$
-^vignettes/exampleBackShift\.markdown$
+^README\.md$
+^vignettes/README\.md$
