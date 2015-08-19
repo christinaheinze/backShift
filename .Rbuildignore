@@ -5,3 +5,4 @@ cran-comments.md
 ^README\.md$
 ^vignettes/README\.md$
 ^demo/$
+^R/checkDiagonalization copy\.R$

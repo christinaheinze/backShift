@@ -211,7 +211,7 @@ between the estimated intervention variance of variable j in environment i
 and the estimated intervention variance of variable j in the base setting
 (given by input parameter `baseSettingEnv`).
 
-```{r, message=FALSE, fig.width=7.5, fig.height=7.5}
+```{r, message=FALSE, fig.width=10, fig.height=7.5}
 plotInterventionVars(backshift.res$varianceEnv, simulation.res$interventionVar)
 ```
 
@@ -223,7 +223,7 @@ diagonalization procedure. The plots below show that the joint diagonalization s
 for all environments as all matrices are diagonal. The values are scaled to [0,1] 
 to allow for comparability accross plots.
 
-```{r, fig.width=3, fig.height=3}
+```{r, fig.keep='all'}
 for(i in 1:G){
   plotDiagonalization(estConnectivity = backshift.res$Ahat, X = X, env = env, whichEnv = i)
 }
