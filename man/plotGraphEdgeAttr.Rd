@@ -44,7 +44,7 @@ selection procedure. Used to determine the width of the plotted edges.}
 \description{
 Given a point estimate of the connectivety matrix or the
  adjacency matrix, this function visualizes the directed graph using
- \code{\link{plot}} from the package \code{igraph}. If a point estimate
+ \code{\link[igraph]{plot.igraph}} from the package \code{\link[igraph]{igraph}}. If a point estimate
  is plotted, the edges' intensity reflects the magnitude of the coefficients.
  If the result is an adjacency matrix estimated by stability selection then
  the edges' width reflects how often an edge was selected and the intensity
@@ -52,7 +52,7 @@ Given a point estimate of the connectivety matrix or the
  provided).
 }
 \details{
-Currently not all options of \code{igraph} are used; additional
+Currently not all options of \code{\link[igraph]{igraph}} are used; additional
  arguments are ignored.
 }
 \examples{
