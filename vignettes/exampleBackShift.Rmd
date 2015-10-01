@@ -84,11 +84,11 @@ generated with `generateA()` or you can use the connectivity matrix provided thr
 #### Connectivity matrix
 
 In the following code, we set whether we "provide" the adjacency matrix 
-\\( \\mathbf{A}\\) -- e.g. by loading the example with `data("exampleAdjacencyMatrix")` 
+__A__ -- e.g. by loading the example with `data("exampleAdjacencyMatrix")` 
 or by creating an adjacency matrix ourselves -- or whether we generate the 
-connectivity matrix \\( \\mathbf{A} \\) with `generateA()`.
+connectivity matrix __A__ with `generateA()`.
 
-NOTE: The entry  \\( \\mathbf{A}_{ij}\\) contains the edge from node \\(i\\) to node \\(j\\).
+NOTE: The entry __A__{_ij_} contains the edge from node _i_ to node _j_.
 
 ```{r, results = "hide"}
 # number of variables
@@ -247,10 +247,10 @@ knitr::kable(metricsStabSelection, digits = 4, caption = "Metrics for stability 
 The location and the strength of the shift interventions can be estimated from the
 data (up to an offset if no observational data is present). 
 These estimates are returned by the function `backShift()` as a 
-\\(G\\times p\\)- dimensional matrix `varianceEnv` where \\(G\\) is the number of 
-environments and \\(p\\) is the number of variables. The \\(ij\\)-th entry contains the difference
-between the estimated intervention variance of variable \\(j\\) in environment \\(i\\)
-and the estimated intervention variance of variable \\(j\\) in the base setting
+_G_ x _p_- dimensional matrix `varianceEnv` where _G_ is the number of 
+environments and _p_ is the number of variables. The _ij_-th entry contains the difference
+between the estimated intervention variance of variable _j_ in environment _i_
+and the estimated intervention variance of variable _j_ in the base setting
 (given by input parameter `baseSettingEnv`).
 
 ```{r, message=FALSE, fig.width=10, fig.height=7.5}
