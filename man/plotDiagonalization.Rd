@@ -5,7 +5,7 @@
 \title{Plots the joint diagonalization. I.e. if it was successful the matrices should all
 be diagonal.}
 \usage{
-plotDiagonalization(estConnectivity, X, env, whichEnv)
+plotDiagonalization(estConnectivity, X, env, whichEnv, main = NULL)
 }
 \arguments{
 \item{estConnectivity}{Estimate for connectivity matrix returned by \code{backShift}.}
@@ -16,6 +16,8 @@ plotDiagonalization(estConnectivity, X, env, whichEnv)
 observation belongs to (a numeric vector of length n).}
 
 \item{whichEnv}{Indicator for the environment to be plotted.}
+
+\item{Optional}{title for plot; defaults to paste("Env.", whichEnv)}
 }
 \description{
 Plots the joint diagonalization. I.e. if it was successful the matrices should all
