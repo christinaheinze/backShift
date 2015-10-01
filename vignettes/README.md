@@ -1,14 +1,19 @@
  
-Example for running [backShift](http://arxiv.org/abs/1506.02494), an algorithm 
-to estimate the connectivity
-matrix of a directed (possibly cyclic) graph with hidden variables. The
-underlying system is required to be linear and we assume that observations
-under different shift interventions are available.
+This is an example for how to run [backShift](http://arxiv.org/abs/1506.02494), 
+an algorithm to estimate the connectivity matrix of a directed (possibly cyclic) 
+graph with hidden variables. The underlying system is required to be linear and 
+we assume that observations under different shift interventions are available.
  
+In this example, we simulate a data set with the function 
+`simulateInterventions()` provided in this package.
  
 ## Options
  
 ### Preliminaries
+ 
+First, we load the `backShift` package as well as the packages `ggplot2` and 
+`fields` which are needed to visualize the results. Additionally, we set the 
+random seed for reproducability. 
  
 
 ```r
@@ -35,8 +40,11 @@ useCov <- TRUE
  
 ### Stability selection
  
-backShift can be run with or without [stability selection](http://arxiv.org/abs/0809.2932). 
-If stability selection should not be used, set `EV` to 0.
+backShift estimates the connectivity matrix of a directed (possibly cyclic) 
+graph. In order to control the number of falsly selected edges we can use 
+[stability selection](http://arxiv.org/abs/0809.2932) which provides a finite 
+sample control for the expected number of false discoveries.
+If stability selection should not be used, set the parameter `EV` to 0.
  
 
 ```r
@@ -59,16 +67,18 @@ thres.pe <- 0.25
  
 ### Simulation
  
-Simulate a data set with `simulateInterventions()` and `generateA()` or use the 
-connectivity matrix provided through `data("exampleAdjacencyMatrix")`.
+A data set can be simulated with `simulateInterventions()`. This function takes 
+the true connectivity matrix as an input. A connectivity matrix can be 
+generated with `generateA()` or you can use the connectivity matrix provided through `data("exampleAdjacencyMatrix")`.
  
 #### Connectivity matrix
  
-Set whether to provide the adjacency matrix A -- e.g. by loading an example 
-with `data("exampleAdjacencyMatrix")` or by creating an adjacency matrix yourself --
-or whether to generate the connectivity matrix A with `generateA()`.
+In the following code, we set whether we "provide" the adjacency matrix 
+\\( \\mathbf{A}\\) -- e.g. by loading the example with `data("exampleAdjacencyMatrix")` 
+or by creating an adjacency matrix ourselves -- or whether we generate the 
+connectivity matrix \\( \\mathbf{A} \\) with `generateA()`.
  
-NOTE: The entry A_ij contains the edge from node i to node j.
+NOTE: The entry  \\( \\mathbf{A}_{ij}\\) contains the edge from node \\(i\\) to node \\(j\\).
  
 
 ```r
@@ -102,6 +112,21 @@ if(providedA){
 ```
  
 #### Observations under different shift interventions
+ 
+The following code generates a data set. In addition to the size of the data set, 
+we can specify the following options: 
+ 
+* whether to also simulate observational data (`simulateObs`), 
+* whether hidden variables should be present (`hidden`)
+* whether the location of the interventions should be known (`knownInterventions`; 
+note that this is not needed for backShift)
+* if `knownInterventions` is `TRUE`, `fracVarInt` gives the fraction of variables
+that are intervened on in each environment
+* `intMult` determines the magnitude of the intervention variances (please see the
+[manuscript](http://arxiv.org/abs/1506.02494) for more details)
+* `noiseMult` determines the noise variance
+* `nonGauss` specifies whether to generate non-Gaussian noise
+ 
  
 
 ```r
@@ -139,6 +164,10 @@ baseInd <- simulation.res$configs$indexObservationalData
  
 ## Running backShift
  
+We can now run backShift. Since we also generated observational data, we provide
+the corresponding index as `baseInd`. This is useful for estimating the 
+intervention variances (see below).
+ 
 
 ```r
 ## Run backShift -------
@@ -156,6 +185,8 @@ backshift.res <- backShift(X, env, covariance=useCov, ev=EV, threshold=thres,
  
 ### Estimated graphs
  
+Plot true graph:
+ 
 
 ```r
 # extract estimates
@@ -170,6 +201,9 @@ plotGraphEdgeAttr(estimate = A, plotStabSelec = FALSE, labels = colnames(A),
 
 <img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
  
+Plot point estimate (thresholded at `thres.pe`): The edge intensity reflects the
+relative magnitude of the coefficients. 
+ 
 
 ```r
 cat("Plotting point estimate, thresholded at", thres.pe,"... \n") 
@@ -179,6 +213,9 @@ plotGraphEdgeAttr(estimate = Ahat, plotStabSelec = FALSE, labels = colnames(A),
 ```
 
 <img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+ 
+Plot stability selection result: The edges thickness indicates how often an 
+edge was selected in the stability selection procedure.
  
 
 ```r
@@ -192,6 +229,10 @@ plotGraphEdgeAttr(estimate = Ahat.structure, plotStabSelec = TRUE,
 <img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
  
 ### Metrics
+ 
+`metricsThreshold` computes the structural hamming distance (SHD), 
+true positive rate (TPR)/recall, false positive rate (FPR) and precision.
+The connectivity matrix gets thresholded at `thres` prior to computing these metrics.
  
 
 ```r
@@ -216,11 +257,12 @@ metricsStabSelection <- metricsThreshold(A, Ahat.structure, thres = 0)
 ## Estimating the intervention variances
  
 The location and the strength of the shift interventions can be estimated from the
-data (up to an offset). These are returned by the function `backShift()` as a 
-($G \times p$)-dimensionalmatrix `varianceEnv` where $G$ is the number of environments and
-$p$ is the number of variables. The ij-th entry contains the difference
-between the estimated intervention variance of variable j in environment i
-and the estimated intervention variance of variable j in the base setting
+data (up to an offset if no observational data is present). 
+These estimates are returned by the function `backShift()` as a 
+\\(G\\times p\\)- dimensional matrix `varianceEnv` where \\(G\\) is the number of 
+environments and \\(p\\) is the number of variables. The \\(ij\\)-th entry contains the difference
+between the estimated intervention variance of variable \\(j\\) in environment \\(i\\)
+and the estimated intervention variance of variable \\(j\\) in the base setting
 (given by input parameter `baseSettingEnv`).
  
 

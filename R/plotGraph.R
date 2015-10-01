@@ -121,7 +121,7 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
         # the transparency of the chosen color
         color.attribute <- abs(E(bio.network)$edge)
         rmin <- 0.2
-        rmax <- 0.5
+        rmax <- 0.8
         alphas.to.use <- convert.given.min(color.attribute, 0, 
                                            max(color.attribute), 
                                            range.min = rmin, range.max = rmax) 
