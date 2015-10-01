@@ -109,6 +109,11 @@ Christina Heinze <heinze@stat.math.ethz.ch>
 \seealso{  \code{\link[InvariantCausalPrediction]{ICP}} and 
   \code{\link[InvariantCausalPrediction]{hiddenICP}} for reconstructing 
   the parents of a variable under interventions on all other variables.
+  \code{\link[CompareCausalNetworks]{getParents}} and 
+  \code{\link[CompareCausalNetworks]{getParentsStable}} from the package
+  \code{\link[CompareCausalNetworks]{CompareCausalNetworks}} to estimate the 
+  connectivity matrix of a directed causal graph, using various possible methods 
+  (including \code{backShift}).
 }
 \examples{
 ## Simulate data with connectivity matrix A

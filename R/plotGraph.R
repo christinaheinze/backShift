@@ -2,14 +2,14 @@
 #'
 #' @description Given a point estimate of the connectivety matrix or the 
 #'  adjacency matrix, this function visualizes the directed graph using 
-#'  \code{\link{plot}} from the package \code{igraph}. If a point estimate
+#'  \code{\link[igraph]{plot.igraph}} from the package \code{\link[igraph]{igraph}}. If a point estimate
 #'  is plotted, the edges' intensity reflects the magnitude of the coefficients.
 #'  If the result is an adjacency matrix estimated by stability selection then
 #'  the edges' width reflects how often an edge was selected and the intensity
 #'  reflects the magnitude of the coefficients (if this information is also 
 #'  provided).
 #'  
-#' @details Currently not all options of \code{igraph} are used; additional 
+#' @details Currently not all options of \code{\link[igraph]{igraph}} are used; additional 
 #'  arguments are ignored.
 #'
 #' @param estimate Estimate of connectivity matrix. This can be a point estimate
