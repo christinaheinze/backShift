@@ -6,7 +6,7 @@
 #' @param env Indicator of the experiment or the intervention type an 
 #' observation belongs to (a numeric vector of length n).
 #' @param whichEnv Indicator for the environment to be plotted.
-#' @param Optional title for plot; defaults to paste("Env.", whichEnv)
+#' @param main Optional title for plot; defaults to paste("Env.", whichEnv)
 #'
 plotDiagonalization <- function(estConnectivity, X, env, whichEnv, main = NULL){
   deltas <- computeDelta(X, env)$Delta
