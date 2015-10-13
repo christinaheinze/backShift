@@ -17,7 +17,7 @@ observation belongs to (a numeric vector of length n).}
 
 \item{whichEnv}{Indicator for the environment to be plotted.}
 
-\item{Optional}{title for plot; defaults to paste("Env.", whichEnv)}
+\item{main}{Optional title for plot; defaults to paste("Env.", whichEnv)}
 }
 \description{
 Plots the joint diagonalization. I.e. if it was successful the matrices should all
