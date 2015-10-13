@@ -1,4 +1,7 @@
 computeVarEnv <- function(B, DeltaList, base.setting.index = 1, verbose = FALSE){
+  
+  if(is.null(base.setting.index)) base.setting.index <- 1
+  
   if(verbose){
     cat("Estimating intervention variance... \n")
   }

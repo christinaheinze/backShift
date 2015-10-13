@@ -64,7 +64,7 @@ simulateInterventions <- function(n, p, A, G, intervMultiplier, noiseMult,
     ## simulate noise perturbations in each environment
     for (i in unique(environment)){
       ind <- which(environment==i)
-      if(!(simulateObs & i == idxObs)){
+      if(!(simulateObs && i == idxObs)){
         # if observational data should be simulated: no interventions in environment 1
         multiplier <- rexp(p)*intervMultiplier
         envVar[i,] <- multiplier
