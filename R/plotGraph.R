@@ -54,12 +54,12 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
                               edgeWeights = NULL, thres.stab = 0.75,
                               main = "", edge.color = "blue", ...){
 
+  # labels
+  colnames(estimate) <- rownames(estimate) <- labels
+  
   # estimate
   df.A <- melt(as.matrix(estimate))
   colnames(df.A) <- c("from", "to", "edge")
-
-  # labels
-  colnames(estimate) <- rownames(estimate) <- labels
 
   is.empty <- sum(estimate) == 0
   if(plotStabSelec & !is.empty){
@@ -81,8 +81,8 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
     }else{
       # draw graph
       bio.network <- graph.data.frame(combined.wo.zeros,
-                                      directed=TRUE) #,
-                                      # vertices = colnames(estimate))
+                                      directed=TRUE,
+                                      vertices = colnames(estimate))
       layoutfunction <-  layout.circle
       layout <- layoutfunction(bio.network)
 
@@ -112,8 +112,8 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
       }else{
         # draw graph
         bio.network <-graph.data.frame(combined.wo.zeros,
-                                       directed=TRUE)#,
-                                       # vertices = colnames(estimate))
+                                       directed=TRUE,
+                                       vertices = colnames(estimate))
         layoutfunction <- layout.circle
         layout <- layoutfunction(bio.network)
 
@@ -155,7 +155,6 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
 
   if(!is.empty){
     plot(bio.network, layout=layout, main = main,
-         vertex.label= labels[sort(unique(c(combined.wo.zeros$from, combined.wo.zeros$to)))],
          vertex.shape="circle",
          vertex.label.cex=optionals$vertex.label.cex,
          vertex.label.color=optionals$vertex.label.color,
