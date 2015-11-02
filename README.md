@@ -9,6 +9,15 @@ The underlying system is required to be linear and we assume that observations u
 install.packages("backShift")
 ```
 
+#### Dependencies
+
+If `getOptions("repos")` does not contain Bioconductor ("BioCsoft"), the packages `graph` and `RBGL` need to be downloaded from Bioconductor with
+
+```r
+source("http://bioconductor.org/biocLite.R") 
+biocLite(c("graph","RBGL"))
+```
+
 ### From Github with `devtools`
 ```r
 devtools::install_github("christinaheinze/backShift")
