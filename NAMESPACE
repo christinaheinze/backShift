@@ -1,6 +1,8 @@
-import(igraph, jointDiag, clue, pcalg, ggplot2)
+import(igraph, jointDiag, clue, pcalg, ggplot2, mvnmle, MASS)
 importFrom(matrixcalc, is.singular.matrix)
 importFrom(reshape2, melt)
 importFrom("grDevices", "col2rgb", "rgb")
 importFrom("stats", "cov", "rexp", "rnorm", "runif")
-export(backShift, simulateInterventions, generateA, metricsThreshold, plotGraphEdgeAttr, plotInterventionVars, plotDiagonalization)
+export(backShift, simulateInterventions, generateA, metricsThreshold, 
+       plotGraphEdgeAttr, plotInterventionVars, plotDiagonalization,
+       bootstrapBackShift)

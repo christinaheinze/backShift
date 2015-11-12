@@ -4,18 +4,18 @@ permuteAndScale <- function(Dhat, verbose = FALSE){
 
   # check whether Dhat already has a CP < 1, if not permute
   if(largestRowElemNotOnDiagonal(Dhat)){
-    if(verbose) 
-      cat('The largest row element does not lie on diagonal.',
-          'Checking whether permutation is stable.\n')
+#     if(verbose) 
+#       cat('The largest row element does not lie on diagonal.',
+#           'Checking whether permutation is stable.\n')
     
     if(possibleToPutLargestRowElemOnDiagonal(Dhat)){
-      if(verbose) cat('Permutation is trivial... \n')
+      # if(verbose) cat('Permutation is trivial... \n')
       Dhat <- putLargestRowElemOnDiagonal(Dhat)
     }else if(hasCPsmallerOne(Dhat, returnCycleNodes = FALSE)$success){
-      if(verbose) 
-        cat('Permutation is stable as all cycle products are smaller than one.\n')
+      # if(verbose) 
+        # cat('Permutation is stable as all cycle products are smaller than one.\n')
     }else{
-      if(verbose) cat('Permuting rows to find stable model...\n')
+      # if(verbose) cat('Permuting rows to find stable model...\n')
       res.perm <- permute(Dhat, verbose)
       
       if(!res.perm$success){
@@ -24,11 +24,11 @@ permuteAndScale <- function(Dhat, verbose = FALSE){
       }
       Dhat <- res.perm$Dhat
     }
-  }else{
-    if(verbose)
-      cat('The largest row element lies on diagonal.',
-          'So the permutation is stable.\n')
-  }
+  }#else{
+    # if(verbose)
+      # cat('The largest row element lies on diagonal.',
+          # 'So the permutation is stable.\n')
+  # }
   
   p <- nrow(Dhat)
   
@@ -211,7 +211,7 @@ permute <- function(Dhat, verbose = FALSE){
   test <- hasCPsmallerOne(Dhat.tilde, FALSE)
   
   if(test$success){
-    if(verbose) cat('The permutation has a cycle product < 1. \n')
+    # if(verbose) cat('The permutation has a cycle product < 1. \n')
     res <- list(Dhat = Dhat.tilde, success = TRUE)
   }else{
     if(verbose) 
