@@ -73,6 +73,7 @@ backShift <- function(X, ExpInd, covariance=TRUE, ev=0, threshold =0.75,
     # permute and scale
     res.point.est <- permuteAndScale(estimatedB, verbose)
     Ahat <- res.point.est$Ahat
+    colnames(Ahat) <- rownames(Ahat) <- colnames(X)
     
     # estimate intervention variances
     varEnv <- computeVarEnv(res.point.est$rescaledDhat, 
@@ -146,18 +147,22 @@ backShift <- function(X, ExpInd, covariance=TRUE, ev=0, threshold =0.75,
           cat("Stability selection...done! \n")
         }
         
-        numberOfRunsConverged <- 100*(nsim-numberOfRunsNotConverged)/nsim
+        percentageOfRunsConverged <- 100*(nsim-numberOfRunsNotConverged)/nsim
         
         message("backShift: Percentage of runs in stability selection that converged: ", 
-                numberOfRunsConverged, "%")
-        if(numberOfRunsConverged < 75)  
+                percentageOfRunsConverged, "%")
+        if(percentageOfRunsConverged < 75)  
           warning("WARNING: backShift -- stability selection -- ",
-                  "only ", numberOfRunsConverged,"% of the runs converged", 
+                  "only ", percentageOfRunsConverged,"% of the runs converged", 
                   immediate. = TRUE)
         
         AhatAdjacency <- edgeRetention(AhatList, threshold, p)
     }else{
-        AhatAdjacency <- NULL
+        AhatAdjacency <- percentageOfRunsConverged <- NULL
     }
-    list(Ahat=Ahat, AhatAdjacency = AhatAdjacency, varianceEnv = varEnv)
+    
+    colnames(AhatAdjacency) <- rownames(AhatAdjacency) <- colnames(X)
+    
+    list(Ahat=Ahat, AhatAdjacency = AhatAdjacency, varianceEnv = varEnv, 
+         percentageOfRunsConverged = percentageOfRunsConverged)
 }

@@ -1,22 +1,22 @@
 
-bootstrappedDesignModel <- function(Ahat, X, env, seed, verbose = FALSE){
-  set.seed(seed)
-  uniqueEnvs <- unique(env)
-  n <- nrow(X)
-  p <- ncol(X)
-  Xboot <- matrix(0, nrow = n, ncol = p)
-
-  for(i in seq_along(uniqueEnvs)){
-    if(verbose) cat(paste("\nResampling residuals for env.", uniqueEnvs[i]))
-    Xe <- X[env == uniqueEnvs[i],]
-    ne <- nrow(Xe)
-    Re <- Xe - Xe%*%Ahat
-    bootSampleResid <- matrix(sample(Re, size = ne*p, replace = TRUE), nrow = ne)
-    Xboot[env == uniqueEnvs[i],] <- bootSampleResid%*%solve(diag(p) - Ahat)
-  }
-
-  Xboot
-}
+# bootstrappedDesignModel <- function(Ahat, X, env, seed, verbose = FALSE){
+#   set.seed(seed)
+#   uniqueEnvs <- unique(env)
+#   n <- nrow(X)
+#   p <- ncol(X)
+#   Xboot <- matrix(0, nrow = n, ncol = p)
+# 
+#   for(i in seq_along(uniqueEnvs)){
+#     if(verbose) cat(paste("\nResampling residuals for env.", uniqueEnvs[i]))
+#     Xe <- X[env == uniqueEnvs[i],]
+#     ne <- nrow(Xe)
+#     Re <- Xe - Xe%*%Ahat
+#     bootSampleResid <- matrix(sample(Re, size = ne*p, replace = TRUE), nrow = ne)
+#     Xboot[env == uniqueEnvs[i],] <- bootSampleResid%*%solve(diag(p) - Ahat)
+#   }
+# 
+#   Xboot
+# }
 
 parametricNoisePars <- function(Ahat, X, env, verbose = FALSE){
   uniqueEnvs <- unique(env)
@@ -113,7 +113,6 @@ jointDiagSumOfOffDiagnalElements <- function(estConnectivity, X, env){
   deltas <- computeDelta(X, env)$Delta
   p <- ncol(estConnectivity)
   K <- length(deltas)
-  deltaIntVar <- vector("list", K)
   sumOffDiag <- 0
 
   for(i in 1:K){
