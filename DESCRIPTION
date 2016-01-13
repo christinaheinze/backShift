@@ -5,7 +5,7 @@ Version: 0.1.3.9000
 Date: 2015-11-12
 Author: Christina Heinze <heinze@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
-Imports: jointDiag, clue, pcalg, igraph, matrixcalc, reshape2, ggplot2
+Imports: jointDiag, clue, igraph, matrixcalc, reshape2, ggplot2, pcalg
 Maintainer: Christina Heinze <heinze@stat.math.ethz.ch>
 Description: Code for 'backShift', an algorithm to estimate the connectivity 
   matrix of a directed (possibly cyclic) graph with hidden variables. The 
@@ -14,8 +14,7 @@ Description: Code for 'backShift', an algorithm to estimate the connectivity
   see <http://arxiv.org/abs/1506.02494>.
 License: GPL
 LazyData: true
-Suggests: knitr, pander, fields,
-    testthat
+Suggests: knitr, pander, fields, testthat, mvnmle
 VignetteBuilder: knitr
 URL: https://github.com/christinaheinze/backShift
 BugReports: https://github.com/christinaheinze/backShift/issues
