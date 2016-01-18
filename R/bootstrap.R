@@ -136,18 +136,23 @@ bootstrapBackShift <- function(Ahat, X, env, nrep, alpha = 0.05,
 
   quantile1 <- quantile(bootsSumOffDiags, alpha/2)
   quantile2 <- quantile(bootsSumOffDiags, 1-alpha/2)
-  lower <- 2*sumOffDiagsBackShift - quantile2
-  upper <- 2*sumOffDiagsBackShift - quantile1
-  tmp <- names(upper)
-  names(upper) <- names(lower)
-  names(lower) <- tmp
+  lowerBasic <- 2*sumOffDiagsBackShift - quantile2
+  upperBasic <- 2*sumOffDiagsBackShift - quantile1
+  tmp <- names(upperBasic)
+  names(upperBasic) <- names(lowerBasic)
+  names(lowerBasic) <- tmp
   
-  decision <- sumOffDiagsBackShift <= upper & sumOffDiagsBackShift >= lower
+  decision <- sumOffDiagsBackShift <= quantile2 & sumOffDiagsBackShift >= quantile1
+  decisionBasic <- sumOffDiagsBackShift <= upperBasic & sumOffDiagsBackShift >= lowerBasic
+  
   names(decision) <- NULL
   
   list(bootsSumOffDiags = bootsSumOffDiags, 
        sumOffDiagsBackShift = sumOffDiagsBackShift, 
        jointDiagSuccess = decision, 
-       lower = lower, 
-       upper = upper)
+       jointDiagSuccessBasic = decisionBasic, 
+       lower = quantile1, 
+       upper = quantile2, 
+       lowerBasic = lowerBasic, 
+       upperBasic = upperBasic)
 }

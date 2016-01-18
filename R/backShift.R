@@ -157,11 +157,11 @@ backShift <- function(X, ExpInd, covariance=TRUE, ev=0, threshold =0.75,
                   immediate. = TRUE)
         
         AhatAdjacency <- edgeRetention(AhatList, threshold, p)
+        colnames(AhatAdjacency) <- rownames(AhatAdjacency) <- colnames(X)
     }else{
         AhatAdjacency <- percentageOfRunsConverged <- NULL
     }
     
-    colnames(AhatAdjacency) <- rownames(AhatAdjacency) <- colnames(X)
     
     list(Ahat=Ahat, AhatAdjacency = AhatAdjacency, varianceEnv = varEnv, 
          percentageOfRunsConverged = percentageOfRunsConverged)
