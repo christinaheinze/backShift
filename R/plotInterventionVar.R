@@ -5,10 +5,12 @@
 #' \code{G} is the number of unique environments, \code{p} is the number of variables.
 #' @param trueIntVars A (Gxp)-dimensional matrix with the true intervention variances 
 #'  if these are known (for simulations). By default this paramter is set to NULL.
-#'
+#' @param scales_facet scales argument passed to ggplot's facet_wrap
 #'
 
-plotInterventionVars <- function(estIntVars, trueIntVars = NULL){
+plotInterventionVars <- function(estIntVars, 
+                                 trueIntVars = NULL, 
+                                 scales_facet = "free"){
   
   gg.df <- melt(as.data.frame(estIntVars))
   gg.df <- cbind(gg.df, rep(1:nrow(estIntVars), times = ncol(estIntVars)))
@@ -34,7 +36,7 @@ plotInterventionVars <- function(estIntVars, trueIntVars = NULL){
     p <- p + scale_color_discrete(name = "Variable")
   }
   
-  p <- p + facet_wrap(~variable, scales = "free") 
+  p <- p + facet_wrap(~variable, scales = scales_facet) 
   p <- p + scale_x_discrete(labels = 1:nrow(estIntVars))
   p <- p + theme(axis.text.x=element_text(angle=90, hjust=1))
   p <- p + xlab("Environment") + ylab("Intervention variance")

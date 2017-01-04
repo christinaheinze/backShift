@@ -18,7 +18,7 @@
 #'  matrix by a stability selection procedure as in \code{\link{backShift}}. In
 #'  this case, the entry \eqn{A_{ij}} indicates how often the edge from
 #'  node \eqn{i} to node \eqn{j} was selected.
-#'  @param plotStabSelec Set to TRUE if \code{estimate} results from the stability
+#' @param plotStabSelec Set to TRUE if \code{estimate} results from the stability
 #'  selection procedure. Otherwise, \code{estimate} is assumed to be a point
 #'  estimate.
 #' @param labels Variable labels to be displayed in plot.
@@ -165,7 +165,8 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
          vertex.label.degree=optionals$vertex.label.degree,
          edge.arrow.size = optionals$edge.arrow.size,
          edge.arrow.width = optionals$edge.arrow.width,
-         edge.curved=autocurve.edges2(bio.network, start = 0.25))
+         edge.curved=autocurve.edges2(bio.network, start = 0.25),
+         ...)
   }else{
     plotGraph(estimate,main=main,labels=labels,
               vertex.shape="circle",
@@ -177,7 +178,8 @@ plotGraphEdgeAttr <- function(estimate, plotStabSelec, labels, thres.point,
               vertex.label.dist=optionals$vertex.label.dist,
               vertex.label.degree=optionals$vertex.label.degree,
               edge.arrow.size = optionals$edge.arrow.size,
-              edge.arrow.width = optionals$edge.arrow.width)
+              edge.arrow.width = optionals$edge.arrow.width,
+              ...)
   }
 }
 
@@ -219,5 +221,6 @@ plotGraph <- function(A, main="",labels=NULL,layoutfunction=layout.circle,...){
        edge.arrow.width=optionals$edge.arrow.width,
        vertex.size=optionals$vertex.size,
        vertex.label.dist=optionals$vertex.label.dist,
-       vertex.label.degree=optionals$vertex.label.degree)
+       vertex.label.degree=optionals$vertex.label.degree, 
+       ...)
 }

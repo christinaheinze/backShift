@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 cran-comments.md
+^vignettes/figure
 ^vignettes/figure/$
 ^README\.md$
 ^vignettes/README\.md$

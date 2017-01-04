@@ -1,4 +1,3 @@
-
 computeDelta <- function(X, ExpInd, covariance=TRUE){
   ## difference between the covariance matrices of X under the different interventions
 

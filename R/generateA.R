@@ -26,11 +26,17 @@
 #' \item sizeCycle Size of the cycle, if \code{cyclic} was set to \code{TRUE}.
 #'}
 generateA <- function(p, expNumNeigh, minCoef, maxCoef, cyclic, verbose = FALSE){
-  graph.obj <- randDAG(p, expNumNeigh, wFUN=list(runif, min=minCoef, max=maxCoef))
+  if(!requireNamespace("pcalg", quietly = TRUE))
+    stop("The package 'pcalg' is needed for the examples to 
+         work. Please install it.", call. = FALSE)
+  
+  graph.obj <- pcalg::randDAG(p, expNumNeigh, 
+                              wFUN=list(runif, min=minCoef, max=maxCoef))
   A <- as(graph.obj, "matrix")
   
   while(sum(A) == 0){ # do not want to get empty graph
-    graph.obj <- randDAG(p, expNumNeigh, wFUN=list(runif, min=minCoef, max=maxCoef))
+    graph.obj <- pcalg::randDAG(p, expNumNeigh, 
+                                wFUN=list(runif, min=minCoef, max=maxCoef))
     A <- as(graph.obj, "matrix")
   }
   

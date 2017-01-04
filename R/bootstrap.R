@@ -1,22 +1,60 @@
+#' Computes a simple model-based bootstrap confidence interval for success of joint diagonalization
+#' procedure. The model-based bootstrap approach assumes normally distributed error terms; the
+#' parameters of the noise distribution are estimated with maximum likelihood.  
+#'
+#' @param Ahat Estimated connectivity matrix returned by \code{backShift}.
+#' @param X A (nxp)-dimensional matrix (or data frame) with n observations of p variables.
+#' @param ExpInd Indicator of the experiment or the intervention type an observation belongs to. A numeric vector of length n. Has to contain at least three different unique values.
+#' @param nrep Number of bootstrap samples.
+#' @param alpha Significance level for confidence interval.
+#' @param covariance A boolean variable. If \code{TRUE}, use only shift in covariance matrix; otherwise use shift in Gram matrix. Set only to \code{FALSE} if at most one variable has a non-zero shift in mean in the same setting (default is \code{TRUE}).
+#' @param baseInd Index for baseline environment against which the intervention variances are measured. Defaults to 1.
+#' @param tolerance  Precision parameter for \code{ffdiag}: the algorithm stops when the criterium difference between two iterations is less than \code{tolerance}. Default is 10^(-4).
+#' @param verbose  If \code{FALSE}, messages are supressed.
+#' 
+#' @return A list with the following elements: 
+#' \itemize{
+#'  \item \code{bootsSumOffDiags} Vector of length \code{nrep} with sum of off-diagonal elements after joint diagnolization procedure in each of the bootstrap samples.
+#'  \item \code{sumOffDiagsBackShift} Sum of off-diagonal elements after joint diagnolization procedure in original estimation.
+#'  \item \code{jointDiagSuccess} \code{TRUE} if \code{sumOffDiagsBackShift} lies 
+#'  within bootstrap confidence interval.
+#'  \item \code{lower} Lower bound of bootstrap confidence interval. 
+#'  \item \code{upper} Upper bound of bootstrap confidence interval. 
+#'  \item \code{lowerBasic} \code{alpha/2} quantile of empirical bootstrap distribution.
+#'  \item \code{upperBasic} \code{1 - alpha/2} quantile of empirical bootstrap distribution.
+#'  }
+#'  
+bootstrapBackShift <- function(Ahat, X, ExpInd, nrep, alpha = 0.05,
+                               covariance=TRUE, baseInd = 1,
+                               tolerance = 1e-3, verbose = FALSE){
+  
+  bootsSumOffDiags <- bootstrapSumOffDiagnols(Ahat, X, ExpInd, nrep,
+                                              covariance=covariance,
+                                              baseInd = baseInd,
+                                              tolerance = tolerance,
+                                              verbose = verbose)
+  sumOffDiagsBackShift <- jointDiagSumOfOffDiagnalElements(Ahat, X, ExpInd)
+  
+  quantile1 <- quantile(bootsSumOffDiags, alpha/2)
+  quantile2 <- quantile(bootsSumOffDiags, 1-alpha/2)
+  
+  meanBoots <- mean(bootsSumOffDiags)
+  sdBoots <- sd(bootsSumOffDiags)
+  lower <- meanBoots - qnorm(1-alpha/2)*sdBoots
+  upper <- meanBoots + qnorm(1-alpha/2)*sdBoots
+ 
+  decision <- (sumOffDiagsBackShift <= upper) & (sumOffDiagsBackShift >= lower)
 
-# bootstrappedDesignModel <- function(Ahat, X, env, seed, verbose = FALSE){
-#   set.seed(seed)
-#   uniqueEnvs <- unique(env)
-#   n <- nrow(X)
-#   p <- ncol(X)
-#   Xboot <- matrix(0, nrow = n, ncol = p)
-# 
-#   for(i in seq_along(uniqueEnvs)){
-#     if(verbose) cat(paste("\nResampling residuals for env.", uniqueEnvs[i]))
-#     Xe <- X[env == uniqueEnvs[i],]
-#     ne <- nrow(Xe)
-#     Re <- Xe - Xe%*%Ahat
-#     bootSampleResid <- matrix(sample(Re, size = ne*p, replace = TRUE), nrow = ne)
-#     Xboot[env == uniqueEnvs[i],] <- bootSampleResid%*%solve(diag(p) - Ahat)
-#   }
-# 
-#   Xboot
-# }
+  names(decision) <- NULL
+  
+  list(bootsSumOffDiags = bootsSumOffDiags, 
+       sumOffDiagsBackShift = sumOffDiagsBackShift, 
+       jointDiagSuccess = decision, 
+       lower = lower, 
+       upper = upper, 
+       quantileLower = quantile1, 
+       quantileUpper = quantile2)
+}
 
 parametricNoisePars <- function(Ahat, X, env, verbose = FALSE){
   uniqueEnvs <- unique(env)
@@ -33,50 +71,6 @@ parametricNoisePars <- function(Ahat, X, env, verbose = FALSE){
   estimates
 }
 
-# bootstrappedDesignParametric <- function(Ahat, X, env, seed, nrep, verbose = FALSE){
-#   set.seed(seed)
-#   uniqueEnvs <- unique(env)
-#   estimates <- parametricNoisePars(Ahat, X, env, verbose = verbose)
-# 
-#   n <- nrow(X)
-#   p <- ncol(X)
-#   XbootReps <- vector("list", nrep)
-#   
-#   for(j in 1:nrep){
-#     if(verbose) if(j %% 10 == 0) cat(paste("\nGenerating design matrix for rep.", j))
-#     Xboot <- matrix(0, nrow = n, ncol = p)
-#     for(i in seq_along(estimates)){
-#       ne <- sum(env == uniqueEnvs[i])
-#       est <- estimates[[i]]
-#       errorsAndInt <- mvrnorm(n = ne, mu = est$muhat, Sigma = est$sigmahat)
-#       Xboot[env == uniqueEnvs[i],] <- errorsAndInt%*%solve(diag(p) - Ahat)
-#     }
-#     XbootReps[[j]] <- Xboot
-#   }
-#   XbootReps
-# }
-# 
-# 
-# bootstrapSumOffDiagnols <- function(Ahat, X, env, nrep, seed = 1,
-#                                covariance=TRUE, baseInd = 1,
-#                                tolerance = 1e-3, verbose = FALSE){
-#   bootstrapReps <- bootstrappedDesignParametric(Ahat, X, env, seed, nrep, verbose)
-#   k <- 1
-#   sumOffDiagnols <- sapply(bootstrapReps, function(Xi){
-#                               if(verbose){
-#                                 if(k %% 10 == 0) cat(paste("\nbackShift estimation rep.", k))
-#                                 k <<- k + 1
-#                               }
-#                               Ahati <- backShift(Xi, env, covariance = covariance, ev=0,
-#                                         baseSettingEnv = baseInd, tolerance = tolerance,
-#                                         verbose = FALSE)$Ahat
-#                               jointDiagSumOfOffDiagnalElements(Ahati, Xi, env)
-#                             }
-#                            )
-#   sumOffDiagnols
-# }
-
-
 bootstrapSumOffDiagnols <- function(Ahat, X, env, nrep, seed = 1,
                                     covariance=TRUE, baseInd = 1,
                                     tolerance = 1e-3, verbose = FALSE){
@@ -89,7 +83,10 @@ bootstrapSumOffDiagnols <- function(Ahat, X, env, nrep, seed = 1,
   sumOffDiagnols <- numeric(nrep)
   
   for(j in 1:nrep){
-    if(verbose) if(j %% 10 == 0) cat(paste("\nGenerating design matrix and running backShift for rep.", j))
+    if(verbose){
+      if(j %% 10 == 0) 
+        cat(paste("\nGenerating design matrix and running backShift for rep.", j))
+    }
     
     Xboot <- matrix(0, nrow = n, ncol = p)
     
@@ -123,36 +120,4 @@ jointDiagSumOfOffDiagnalElements <- function(estConnectivity, X, env){
   sumOffDiag
 }
 
-bootstrapBackShift <- function(Ahat, X, env, nrep, alpha = 0.05,
-                                    covariance=TRUE, baseInd = 1,
-                                    tolerance = 1e-3, verbose = FALSE){
 
-  bootsSumOffDiags <- bootstrapSumOffDiagnols(Ahat, X, env, nrep,
-                                                     covariance=covariance,
-                                                     baseInd = baseInd,
-                                                     tolerance = tolerance,
-                                                     verbose = verbose)
-  sumOffDiagsBackShift <- jointDiagSumOfOffDiagnalElements(Ahat, X, env)
-
-  quantile1 <- quantile(bootsSumOffDiags, alpha/2)
-  quantile2 <- quantile(bootsSumOffDiags, 1-alpha/2)
-  lowerBasic <- 2*sumOffDiagsBackShift - quantile2
-  upperBasic <- 2*sumOffDiagsBackShift - quantile1
-  tmp <- names(upperBasic)
-  names(upperBasic) <- names(lowerBasic)
-  names(lowerBasic) <- tmp
-  
-  decision <- sumOffDiagsBackShift <= quantile2 & sumOffDiagsBackShift >= quantile1
-  decisionBasic <- sumOffDiagsBackShift <= upperBasic & sumOffDiagsBackShift >= lowerBasic
-  
-  names(decision) <- NULL
-  
-  list(bootsSumOffDiags = bootsSumOffDiags, 
-       sumOffDiagsBackShift = sumOffDiagsBackShift, 
-       jointDiagSuccess = decision, 
-       jointDiagSuccessBasic = decisionBasic, 
-       lower = quantile1, 
-       upper = quantile2, 
-       lowerBasic = lowerBasic, 
-       upperBasic = upperBasic)
-}

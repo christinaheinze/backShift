@@ -27,4 +27,4 @@ devtools::install_github("christinaheinze/backShift")
 See the [package vignettes](https://github.com/christinaheinze/backShift/tree/master/vignettes) for more details.
 
 ## References
-D. Rothenhaeusler, C. Heinze, J. Peters and N. Meinshausen. "backShift: Learning causal cyclic graphs from unknown shift interventions". [arXiv](http://arxiv.org/abs/1506.02494).
+D. Rothenhaeusler, C. Heinze, J. Peters and N. Meinshausen. "backShift: Learning causal cyclic graphs from unknown shift interventions". Advances in Neural Information Processing Systems (NIPS) 28, 2015. [arXiv](http://arxiv.org/abs/1506.02494).

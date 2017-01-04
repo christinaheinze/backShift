@@ -7,7 +7,7 @@ output:
         fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{backShift demo}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{rmarkdown::render()}
   %\VignetteEncoding{UTF-8}
 
 status: process

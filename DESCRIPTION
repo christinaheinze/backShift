@@ -1,20 +1,36 @@
 Package: backShift
 Type: Package
 Title: Learning Causal Cyclic Graphs from Unknown Shift Interventions
-Version: 0.1.3.9000
-Date: 2015-11-12
-Author: Christina Heinze <heinze@stat.math.ethz.ch>
-Depends: R (>= 3.1.0)
-Imports: jointDiag, clue, igraph, matrixcalc, reshape2, ggplot2, pcalg
-Maintainer: Christina Heinze <heinze@stat.math.ethz.ch>
-Description: Code for 'backShift', an algorithm to estimate the connectivity 
-  matrix of a directed (possibly cyclic) graph with hidden variables. The 
-  underlying system is required to be linear and we assume that observations 
-  under different shift interventions are available. For more details, 
-  see <http://arxiv.org/abs/1506.02494>.
+Version: 0.1.4
+Date: 2017-01-04
+Author: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Depends:
+    R (>= 3.1.0)
+Imports:
+    methods,
+    jointDiag,
+    clue,
+    igraph,
+    matrixcalc,
+    reshape2,
+    ggplot2,
+    mvnmle,
+    MASS
+Maintainer: Christina Heinze-Deml <heinzedeml@stat.math.ethz.ch>
+Description: Code for 'backShift', an algorithm to estimate the connectivity
+    matrix of a directed (possibly cyclic) graph with hidden variables. The
+    underlying system is required to be linear and we assume that observations
+    under different shift interventions are available. For more details,
+    see <http://arxiv.org/abs/1506.02494>.
 License: GPL
 LazyData: true
-Suggests: knitr, pander, fields, testthat, mvnmle
+Suggests:
+    knitr,
+    pander,
+    fields,
+    testthat,
+    pcalg
 VignetteBuilder: knitr
 URL: https://github.com/christinaheinze/backShift
 BugReports: https://github.com/christinaheinze/backShift/issues
+RoxygenNote: 5.0.1

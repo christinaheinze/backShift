@@ -270,7 +270,7 @@ and the estimated intervention variance of variable _j_ in the base setting
 plotInterventionVars(backshift.res$varianceEnv, simulation.res$interventionVar)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
  
  
 ## Checking the model assumptions
@@ -287,4 +287,4 @@ for(i in 1:G){
 }
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-2.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-3.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-4.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-5.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-6.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-7.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-8.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-9.png) ![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-10.png) 
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-2.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-3.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-4.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-5.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-6.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-7.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-8.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-9.png)![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-10.png)

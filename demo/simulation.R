@@ -1,5 +1,9 @@
 # Example --------
 
+if(!requireNamespace("pcalg", quietly = TRUE))
+  stop("The package 'pcalg' is needed for the examples to 
+ work. Please install it.", call. = FALSE)
+
 seed <- 1
 set.seed(seed)
 
