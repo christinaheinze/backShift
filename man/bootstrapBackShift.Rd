@@ -46,4 +46,3 @@ Computes a simple model-based bootstrap confidence interval for success of joint
 procedure. The model-based bootstrap approach assumes normally distributed error terms; the
 parameters of the noise distribution are estimated with maximum likelihood.
 }
-

@@ -19,4 +19,3 @@ if these are known (for simulations). By default this paramter is set to NULL.}
 \description{
 Plots the estimated intervention variances.
 }
-

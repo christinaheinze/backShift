@@ -70,4 +70,3 @@ Given a point estimate of the connectivety matrix or the
 Currently not all options of \code{\link[igraph]{igraph}} are used; additional
  arguments are ignored.
 }
-

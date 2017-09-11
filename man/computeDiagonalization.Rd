@@ -27,4 +27,3 @@ for a given environment (cf. Eq.(7) in the paper).
 If the joint diagonalization was successful the matrix should 
 be diagonal for all environments $j$.
 }
-

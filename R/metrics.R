@@ -38,10 +38,13 @@
 metricsThreshold <- function(trueA, est, thres = seq(0.01, 1, by = 0.01)){
   trueA <- as.matrix(trueA)
   est <- as.matrix(est)
-  
+  estOrig <- est
   res <- matrix(0, nrow = length(thres), ncol = 6)
   for(t in 1:length(thres)){
-    est[abs(est) < thres[t]] <- 0
+    est <- estOrig
+    edgesToThreshold <- abs(est) < thres[t]
+    if(length(edgesToThreshold) > 0)
+      est[edgesToThreshold] <- 0
     res[t,] <- c(thres[t], unlist(metrics(trueA, est)))
   }
   res <- as.data.frame(res)

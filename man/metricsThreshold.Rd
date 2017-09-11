@@ -47,4 +47,3 @@ A.est[3,1] <- 0.83
 # compute metrics with threshold 0.25
 metricsThreshold(A, A.est, thres = 0.25)
 }
-

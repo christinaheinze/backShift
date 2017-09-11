@@ -1,4 +1,5 @@
-import(igraph, jointDiag, clue, ggplot2, mvnmle, MASS)
+useDynLib(backShift, .registration = TRUE)
+import(igraph, clue, ggplot2, mvnmle, MASS)
 importFrom(matrixcalc, is.singular.matrix)
 importFrom(reshape2, melt)
 importFrom("graphics", "plot")

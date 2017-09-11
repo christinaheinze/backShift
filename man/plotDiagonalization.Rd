@@ -23,4 +23,3 @@ observation belongs to (a numeric vector of length n).}
 Plots the joint diagonalization. I.e. if it was successful the matrices should all
 be diagonal.
 }
-

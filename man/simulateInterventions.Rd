@@ -68,4 +68,3 @@ Dominik Rothenhaeusler, Christina Heinze, Jonas Peters, Nicolai Meinshausen (201
 backShift: Learning causal cyclic graphs from unknown shift interventions.
 arXiv preprint: \url{http://arxiv.org/abs/1506.02494}
 }
-

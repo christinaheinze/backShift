@@ -41,4 +41,3 @@ If \code{expNumNeigh} and \code{maxCoef} are large, function
 may fail to find a connectivity matrix with cycle product smaller one. In this
 case, try to lower these parameters.
 }
-
